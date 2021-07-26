@@ -1,0 +1,10 @@
+language: perl
+perl:
+  - "5.18"
+  - "5.28"
+notifications:
+  email: false
+matrix:
+  fast_finish: true
+before_install:
+  - eval $(curl https://travis-perl.github.io/init) --auto
