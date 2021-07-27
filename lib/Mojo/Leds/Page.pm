@@ -25,9 +25,12 @@ sub route {
     # comunque tutte le funzioni
     for ($format) {
         if    (/^html?/) { my $r = $s->render_html; $s->render(%$r) if ($r) }
-        elsif ('txt')    { my $r = $s->render_html; $s->render(%$r) if ($r) }
-        elsif ('json')   { $s->render( json => $s->render_json ) }
-        elsif ('text')   { $s->render( text => $s->render_text ) }
+        elsif ( $_ eq 'txt' ) {
+            my $r = $s->render_html;
+            $s->render(%$r) if ($r);
+        }
+        elsif ( $_ eq 'json' ) { $s->render( json => $s->render_json ) }
+        elsif ( $_ eq 'text' ) { $s->render( text => $s->render_text ) }
 
         # match xxx.model.js ad esempio
         elsif (/^(\w+\.)?js$/)  { $s->render_static_file($format) }
