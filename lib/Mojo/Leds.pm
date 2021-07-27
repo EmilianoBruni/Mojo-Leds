@@ -6,19 +6,22 @@ use Mojo::Log;
 sub startup() {
     my $s = shift;
 
-    # log
-    $s->app->log(
-        Mojo::Log->new(
-            path  => $s->home->rel_file('/logs/app.log'),
-            level => 'info'
-        )
-    ) unless ( $s->app->mode eq 'development' );
-
     # plugins
     $s->plugin( Config => { file => 'cfg/app.cfg' } );
 
     # lo leggo due volte per valorizzare dentro al cfg app->config->...
     $s->plugin( Config => { file => 'cfg/app.cfg' } );
+
+    # log
+	unless ($s->app->mode eq 'development') {
+		if ($s->config->{log}->{path}) {
+			my $log = Mojo::Log->new(
+		            path  => $s->config->{log}->{path},
+		            level => $s->config->{log}->{level} || 'warn',
+		    );
+	    	$s->app->log($log);
+		}
+	}
 
     # support for plugins config in Mojolicious < 9.0
     if ( $Mojolicious::VERSION < 9 && ( my $plugins = $s->config->{plugins} ) ) {
