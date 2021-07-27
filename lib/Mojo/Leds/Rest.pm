@@ -57,7 +57,7 @@ sub resource_lookup {
     my $c   = shift;
     my $rec = $c->_resource_lookup;
     $rec || return $c->_raise_error( 'Element not found', 404 );
-    $c->stash($c->_class_name . '::record' => $rec );
+    $c->stash( $c->_class_name . '::record' => $rec );
     return $rec;
 }
 
