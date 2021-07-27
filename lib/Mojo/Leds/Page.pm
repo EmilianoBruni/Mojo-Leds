@@ -1,7 +1,7 @@
 package Mojo::Leds::Page;
 
 use Mojo::Base 'Mojolicious::Controller';
-use feature "switch";
+use experimental qw( switch );
 
 our $VERSION = "0.3";
 

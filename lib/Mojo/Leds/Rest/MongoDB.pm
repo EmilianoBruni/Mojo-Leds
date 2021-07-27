@@ -1,6 +1,6 @@
 package Mojo::Leds::Rest::MongoDB;
 
-use feature "switch";
+use experimental qw( switch );
 use boolean;
 
 use Mojo::Base 'Mojo::Leds::Rest';
