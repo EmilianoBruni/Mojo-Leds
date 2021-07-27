@@ -13,15 +13,15 @@ sub startup() {
     $s->plugin( Config => { file => 'cfg/app.cfg' } );
 
     # log
-	unless ($s->app->mode eq 'development') {
-		if ($s->config->{log}->{path}) {
-			my $log = Mojo::Log->new(
-		            path  => $s->config->{log}->{path},
-		            level => $s->config->{log}->{level} || 'warn',
-		    );
-	    	$s->app->log($log);
-		}
-	}
+    unless ( $s->app->mode eq 'development' ) {
+        if ( $s->config->{log}->{path} ) {
+            my $log = Mojo::Log->new(
+                path  => $s->config->{log}->{path},
+                level => $s->config->{log}->{level} || 'warn',
+            );
+            $s->app->log($log);
+        }
+    }
 
     # support for plugins config in Mojolicious < 9.0
     if ( $Mojolicious::VERSION < 9 && ( my $plugins = $s->config->{plugins} ) ) {
