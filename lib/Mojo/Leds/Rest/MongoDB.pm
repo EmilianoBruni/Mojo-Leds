@@ -1,6 +1,5 @@
 package Mojo::Leds::Rest::MongoDB;
 
-use experimental qw( switch );
 use boolean;
 
 use Mojo::Base 'Mojo::Leds::Rest';
@@ -147,21 +146,24 @@ sub _qs2q {
     while ( my ( $k, $v ) = each %$flt ) {
         $v = $v + 0 if ( looks_like_number($v) );
         $v = undef  if ( $v eq '[null]' );
-        given ($k) {
+        for ($k) {
 
             # match exact filter
-            $c->_query_builder( \$qry, $1, $v, sub { return shift } )
-              when (/^q\[(.*?)\]/);
+            if (/^q\[(.*?)\]/) {
+                $c->_query_builder( \$qry, $1, $v, sub { return shift } );
+            }
 
             # match regexp filter
-            $c->_query_builder( \$qry, $1, $v,
-                sub { $a = shift; return qr/$a/i } ) when (/^qre\[(.*?)\]/);
+            elsif (/^qre\[(.*?)\]/) {
+                $c->_query_builder( \$qry, $1, $v,
+                    sub { $a = shift; return qr/$a/i } );
+            }
 
             # advanced sort
-            when (/^sort\[(.*?)\]/) { $opt->{sort}->Push( $1 => $v ) }
-            when ('limit')          { $opt->{limit} = $v }
-            when ('skip')           { $opt->{skip} = $v }
-            when ('rc')             { $with_count = $v }
+            elsif (/^sort\[(.*?)\]/) { $opt->{sort}->Push( $1 => $v ) }
+            elsif ( $_ eq 'limit' )  { $opt->{limit} = $v }
+            elsif ( $_ eq 'skip' )   { $opt->{skip} = $v }
+            elsif ( $_ eq 'rc' )     { $with_count = $v }
         }
     }
 

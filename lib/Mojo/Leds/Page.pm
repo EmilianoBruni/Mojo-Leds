@@ -1,9 +1,6 @@
 package Mojo::Leds::Page;
 
 use Mojo::Base 'Mojolicious::Controller';
-use experimental qw( switch );
-
-our $VERSION = "0.3";
 
 sub route {
     my $s = shift;
@@ -26,16 +23,16 @@ sub route {
 
     # occhio che respond_to non va bene perche' sembra chiamare
     # comunque tutte le funzioni
-    given ($format) {
-        when (/^html?/) { my $r = $s->render_html; $s->render(%$r) if ($r) }
-        when ('txt')    { my $r = $s->render_html; $s->render(%$r) if ($r) }
-        when ('json')   { $s->render( json => $s->render_json ) }
-        when ('text')   { $s->render( text => $s->render_text ) }
+    for ($format) {
+        if    (/^html?/) { my $r = $s->render_html; $s->render(%$r) if ($r) }
+        elsif ('txt')    { my $r = $s->render_html; $s->render(%$r) if ($r) }
+        elsif ('json')   { $s->render( json => $s->render_json ) }
+        elsif ('text')   { $s->render( text => $s->render_text ) }
 
         # match xxx.model.js ad esempio
-        when (/^(\w+\.)?js$/)  { $s->render_static_file($format) }
-        when (/^(\w+\.)?css$/) { $s->render_static_file($format) }
-        default                { $s->render( { text => '', status => 204 } ) }
+        elsif (/^(\w+\.)?js$/)  { $s->render_static_file($format) }
+        elsif (/^(\w+\.)?css$/) { $s->render_static_file($format) }
+        else                    { $s->render( { text => '', status => 204 } ) }
     }
 }
 
