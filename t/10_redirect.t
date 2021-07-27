@@ -17,7 +17,7 @@ push @{ $t->app->renderer->paths }, $www;
 
 # direct to another controller no link changed
 my $r = $t->app->routes;
-$r->route('/direct')->to( app => 'welcome::index', action => 'route' )
+$r->any('/direct')->to( app => 'welcome::index', action => 'route' )
   ->name('root');
 $t->get_ok('/direct')->status_is(200)->content_like(qr/Welcome/i);
 
