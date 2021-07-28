@@ -1,5 +1,6 @@
 package Mojo::Leds::Page;
 
+use 5.014; # because s///r usage
 use Mojo::Base 'Mojolicious::Controller';
 
 sub route {
