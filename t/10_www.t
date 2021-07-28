@@ -29,13 +29,16 @@ $t->get_ok('/welcome/')->status_is(200)->content_like(qr/Welcome/i);
 $t->get_ok('/welcome/index')->status_is(200)->content_like(qr/Welcome/i);
 
 # get .css
-$t->get_ok('/welcome/index.css')->status_is(200)->content_like(qr/font-size/i);
+$t->get_ok('/welcome/index.css')->status_is(200)->content_like(qr/font-size/i)
+  ->content_type_like( qr|^text/css|, 'right content type' );
 
 # get .js
-$t->get_ok('/welcome/index.js')->status_is(200)->content_like(qr/function/i);
+$t->get_ok('/welcome/index.js')->status_is(200)->content_like(qr/function/i)
+  ->content_type_like( qr|^application/javascript|, 'right content type' );
 
 # get .something.js
 $t->get_ok('/welcome/index.model.js')->status_is(200)
-  ->content_like(qr/MyModel/i);
+  ->content_like(qr/MyModel/i)
+  ->content_type_like( qr|^application/javascript|, 'right content type' );
 
 done_testing();

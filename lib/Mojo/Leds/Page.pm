@@ -1,19 +1,20 @@
 package Mojo::Leds::Page;
 
-use 5.014; # because s///r usage
+use 5.014;    # because s///r usage
 use Mojo::Base 'Mojolicious::Controller';
+use File::Basename;
+use Mojo::Util qw(class_to_path);
 
 sub route {
     my $s = shift;
 
     my $format = $s->accepts;
     $s->app->types->type(
-        js         => 'application/javascript',
-        css        => 'text/css',
-        xls        => 'application/vnd.ms-excel',
-        text       => 'text/plain',
-        txt        => 'text/plain',
-        'model.js' => 'application/javascript',
+        js   => 'application/javascript',
+        css  => 'text/css',
+        xls  => 'application/vnd.ms-excel',
+        text => 'text/plain',
+        txt  => 'text/plain',
     );
     $format = $format->[0] || 'html' if ( ref($format) eq 'ARRAY' );
     if ( $s->match->path_for->{path} =~ /\.(\w+)$/ ) {
@@ -34,8 +35,8 @@ sub route {
         elsif ( $_ eq 'text' ) { $s->render( text => $s->render_text ) }
 
         # match xxx.model.js ad esempio
-        elsif (/^(\w+\.)?js$/)  { $s->render_static_file($format) }
-        elsif (/^(\w+\.)?css$/) { $s->render_static_file($format) }
+        elsif (/^(\w+\.)?js$/)  { $s->render_static_file }
+        elsif (/^(\w+\.)?css$/) { $s->render_static_file }
         else                    { $s->render( { text => '', status => 204 } ) }
     }
 }
@@ -89,25 +90,22 @@ sub render_text {
 }
 
 sub render_static_file {
-    my $c   = shift;
-    my $ext = shift;
+    my $c = shift;
 
-    # support for ext xxxx.yy
-    my $format = $ext;
-    if ( $ext =~ /\.(\w+)$/ ) {
-        $format = $1;
-    }
+    # optional sub-folder for templates inside app home
+    my $dRoot = $c->app->config->{docs_root} || '';
 
-    my $path = $c->match->path_for->{path};
-    $path =~ s/\.\w+$//;    # strippo l'eventuale estensione residua
+    # indipendently from url, it consider the requested file local to the ctl
+    my $ctl_path = $c->app->home->rel_file( $dRoot . '/' . class_to_path($c) );
 
-    my $documentRoot =
-      $c->app->config->{docs_root} ? $c->app->config->{docs_root} . '/' : '';
+    my $fn = $c->tx->req->url->path->parts->[-1];    # the requested file name
+    my $filepath = $ctl_path->dirname()->child($fn);    # filesystem file path
+    return $c->reply->not_found unless ( -e $filepath );    # file doen't exists
 
     my %opt = (
         content_disposition => 'inline',
-        filepath => $c->app->home->rel_file("$documentRoot$path.$ext"),
-        format   => $format,
+        filepath            => $filepath,
+        format              => $filepath =~ s/(.*^?)\.//r
     );
     $c->render_file(%opt);
 }
