@@ -1,8 +1,12 @@
 package Mojo::Leds::Rest::DBIx;
 
-use Mojo::Base 'Mojo::Leds::Page';
+use Mojo::Base 'Mojo::Leds::Rest';
+use vars qw($AUTOLOAD);
 
 has pk => 'id';
+
+# here dbHelper is schema
+has dbHelper => 'schema';
 
 sub _create {
     my $c   = shift;
@@ -36,34 +40,36 @@ sub _patch {
     return $rec;
 }
 
-sub read {
-    my $c   = shift;
-    my $rec = $c->stash('restrec');
-    $c->render_json( { $rec->get_columns } );
-}
-
-sub update {
-    my $c = shift;
-    return $c->_raise_error( "Resource is read-only", 403 ) if $c->ro;
-    my $json = $c->_json_from_body;
-    return unless ($json);
-    my $id  = $c->param('id');
-    my $rec = $c->_update( $id, $json );
-    return unless ($rec);
-    $c->render_json( { $rec->get_columns } );
-}
+# sub update {
+#     my $c = shift;
+#     return $c->_raise_error( "Resource is read-only", 403 ) if $c->ro;
+#     my $json = $c->_json_from_body;
+#     return unless ($json);
+#     my $id  = $c->param('id');
+#     my $rec = $c->_update( $id, $json );
+#     return unless ($rec);
+#     $c->render_json( { $rec->get_columns } );
+# }
 
 sub _update {
-    my $c    = shift;
-    my $id   = shift;
-    my $json = shift;
+    my $c   = shift;
+    my $set = shift;
+
+    my $id = shift || $c->restify->current_id;
 
     # remove id from updated fields
-    delete $json->{ $c->pk };
+    my $pk = $c->pk;
+    delete $set->{$pk};
 
-    my $rec = $c->stash('restrec');
+    my $rec = $c->stash( $c->_class_name . '::record' );
     return $c->_raise_error( 'Element not found', 404 ) unless ($rec);
-    $c->_sync_rec_with_json( $rec, $json );
+
+    # annullo tutti i campi
+    $rec->$_(undef) foreach ( grep !/^${pk}$/, keys $c->_rec2json );
+    while ( my ( $k, $v ) = each %$set ) {
+        $rec->$k($v);
+    }
+
     $rec->update;
     return $rec;
 }
@@ -83,8 +89,10 @@ sub list {
     my ( $qry, $opt, $with_count ) = $c->_qs2q;
     my $rec  = $c->_dbfind( $qry, $opt );
     my @recs = $rec->all;
-
-    my $ret = [ $rec->hashref_array() ];
+    my $ret  = [];
+    foreach (@recs) {
+        push @$ret, $c->_rec2json($_);
+    }
     if ($with_count) {
         $ret = [ { count => $rec->pager->total_entries }, recs => $ret ];
     }
@@ -105,7 +113,7 @@ sub listupdate {
     my @recs;
 
     foreach my $item (@$json) {
-        my $rec = $c->db->resultset( $c->tableT )->update_or_create($item);
+        my $rec = $c->tableDB->update_or_create($item);
         push @recs, $c->_rec2json($rec);
 
     }
@@ -157,7 +165,13 @@ sub _dbfind {
     my $qry = shift;
     my $opt = shift;
 
-    return $c->db->resultset( $c->tableT )->search( $qry, $opt );
+    return $c->tableDB->search( $qry, $opt );
+}
+
+sub _tableDB {
+    my $c      = shift;
+    my $helper = $c->dbHelper;
+    return $c->helpers->$helper->resultset( $c->table );
 }
 
 # sub sync_rec_with_post {
@@ -175,9 +189,9 @@ sub _dbfind {
 # }
 
 sub _resource_lookup {
-    my $c   = shift;
-    my $id  = $c->restify->current_id;
-    return $c->db->resultset( $c->tableT )->single( { $c->pk => $id } );
+    my $c  = shift;
+    my $id = $c->restify->current_id;
+    return $c->tableDB->single( { $c->pk => $id } );
 }
 
 1;

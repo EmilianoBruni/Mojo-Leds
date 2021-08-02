@@ -50,6 +50,12 @@ sub _patch {
     return $rec;
 }
 
+sub _tableDB {
+    my $c = shift;
+    my $helper = $c->dbHelper;
+    return $c->helpers->$helper->coll( $c->table );
+}
+
 sub _update {
     my $c   = shift;
     my $set = shift;
