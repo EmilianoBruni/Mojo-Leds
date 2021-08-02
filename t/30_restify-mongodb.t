@@ -26,6 +26,19 @@ my $www  = $site->child('www')->to_string;
 lib->import($lib);
 lib->import($www);
 
+# try to load plugins for this DB
+my $plugin_rest = 'Mojolicious::Plugin::Restify::OtherActions';
+eval "use $plugin_rest";
+plan skip_all => <<EOF if ($@);
+    Install $plugin_rest to run these tests
+EOF
+
+my $plugin_db = 'Mojolicious::Plugin::Mongodbv2';
+eval "use $plugin_db";
+plan skip_all => <<EOF if ($@);
+    Install $plugin_db to run these tests
+EOF
+
 my $t = Test::Mojo->new('Skel');
 push @{ $t->app->renderer->paths }, $www;
 
@@ -36,7 +49,14 @@ EOF
 my $app = $t->app;
 my $r   = $app->routes;
 
-$app->plugin('Restify::OtherActions');
+$app->plugin(
+    $plugin_db => {
+        host               => $app->config->{mongo_uri},
+        connect_timeout_ms => 300000,
+        socket_timeout_ms  => 300000
+    }
+);
+$app->plugin($plugin_rest);
 
 my $rest = $r->under('/rest')->to( namespace => 'Test::Skel', cb => sub { 1 } );
 $app->restify->routes(

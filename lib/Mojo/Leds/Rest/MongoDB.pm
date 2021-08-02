@@ -84,7 +84,7 @@ sub list {
     my $rec  = $c->_dbfind( $qry, $opt );
     my @recs = $rec->all;
 
-    my $ret = {};
+    my $ret = [@recs];
 
     if ($with_count) {
         my $count =
@@ -92,9 +92,6 @@ sub list {
           ? $c->tableDB->count_documents($qry)
           : scalar(@recs);
         $ret = { count => $count, recs => [@recs] };
-    }
-    else {
-        $ret = [@recs];
     }
 
     $c->render_json($ret);
@@ -134,11 +131,11 @@ sub listupdate {
 
 # da spostare sul parent una volta capito come funziona DBIx
 sub _qs2q {
-    my $c          = shift;
-    my $flt        = $c->req->query_params->to_hash;
-    my $qry        = {};
-    my $opt        = {};
-    my $with_count = 0;
+    my $c   = shift;
+    my $flt = $c->req->query_params->to_hash;
+    my $qry = {};
+    my $opt = {};
+    my $rc  = 0;
 
     $opt->{sort} = new Tie::IxHash;
 
@@ -163,7 +160,7 @@ sub _qs2q {
             elsif (/^sort\[(.*?)\]/) { $opt->{sort}->Push( $1 => $v ) }
             elsif ( $_ eq 'limit' )  { $opt->{limit} = $v }
             elsif ( $_ eq 'skip' )   { $opt->{skip} = $v }
-            elsif ( $_ eq 'rc' )     { $with_count = $v }
+            elsif ( $_ eq 'rc' )     { $rc = $v }
         }
     }
 
@@ -184,7 +181,7 @@ sub _qs2q {
           . "\nOpt: "
           . Data::Dumper::Dumper($opt) );
 
-    return ( $qry, $opt, $with_count );
+    return ( $qry, $opt, $rc );
 }
 
 sub _dbfind {
