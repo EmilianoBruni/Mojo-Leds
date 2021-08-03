@@ -2,11 +2,10 @@
 <html>
 <head>
     <title>Server error</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/css/not_found.production.css">
-% require_reg   'bootstrap';
-% require_reg   'fontawesome';
-%== include_css;
-%== include_js;
 </head>
 <body>
     <div class="container">

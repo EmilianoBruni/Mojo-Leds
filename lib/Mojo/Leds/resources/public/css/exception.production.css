@@ -2,7 +2,7 @@ body {
 		background-color: #000;
 }
 .bg-img {
-		background: url(/img/sailboat_storm.webp) no-repeat center center fixed;
+		background: url(/img/exception.production.gif) no-repeat center center fixed;
 		background-size: 100% 100%;
 		background-color: #000;
 		position: absolute;
@@ -77,11 +77,11 @@ h2 {
 }
 .btn {
 		display: inline-block;
-		border: 1px solid #aaa;
-		border-radius: 40px;
-		padding: 15px 30px;
-		margin-right: 15px;
-	  color: #999;
+		border: 1px solid #aaa !important;
+		border-radius: 40px !important;
+		padding: 15px 30px !important;
+		margin-right: 15px !important;
+	  color: #999 !important;
 }
 .btn:hover {
 		color: #e2e2e2;
