@@ -2,6 +2,7 @@ package Mojo::Leds;
 
 use Mojo::Base 'Mojolicious';
 use Mojo::Log;
+use Mojo::File 'path';
 
 sub startup() {
     my $s = shift;
@@ -44,9 +45,15 @@ sub startup() {
 
     # ridefinisco la root dei template
     $s->app->renderer->paths->[0] = $s->home->rel_file($docs_root)->to_string;
+
+    #  add bundled templates
+    my $templates_bundled = path(__FILE__)->sibling('Leds')->child('resources');
+    push @{$s->app->renderer->paths}, $templates_bundled->child('templates');
+    push @{$s->app->static->paths}, $templates_bundled->child('public');
 }
 
 1;
+
 __END__
 
 # ABSTRACT: Leds aka Light Environment (emi) for Development System based on Mojolicious
