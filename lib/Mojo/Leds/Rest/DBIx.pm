@@ -5,8 +5,7 @@ use vars qw($AUTOLOAD);
 
 has pk => 'id';
 
-# here dbHelper is schema
-has dbHelper => 'schema';
+has dbHelper => 'schema';    # here dbHelper is schema
 
 sub _create {
     my $c   = shift;
@@ -29,8 +28,7 @@ sub _patch {
     my $c   = shift;
     my $set = shift;
 
-    # remove id from updated fields
-    delete $set->{ $c->pk };
+    delete $set->{ $c->pk };    # remove id from updated fields
 
     my $rec = $c->stash( $c->_class_name . '::record' );
     return $c->_raise_error( 'Element not found', 404 )
@@ -39,17 +37,6 @@ sub _patch {
 
     return $rec;
 }
-
-# sub update {
-#     my $c = shift;
-#     return $c->_raise_error( "Resource is read-only", 403 ) if $c->ro;
-#     my $json = $c->_json_from_body;
-#     return unless ($json);
-#     my $id  = $c->param('id');
-#     my $rec = $c->_update( $id, $json );
-#     return unless ($rec);
-#     $c->render_json( { $rec->get_columns } );
-# }
 
 sub _update {
     my $c   = shift;
@@ -94,7 +81,7 @@ sub list {
         push @$ret, $c->_rec2json($_);
     }
     if ($rc) {
-        $ret = { count => $rec->pager->total_entries , recs => $ret };
+        $ret = { count => $rec->pager->total_entries, recs => $ret };
     }
 
     $c->render_json($ret);
@@ -138,7 +125,7 @@ sub _qs2q {
             }
             elsif (/^sort\[(.*?)\]/) {
                 my $order = $v == 1 ? '-asc' : '-desc';
-                push @{ $opt->{'order_by'} },  {$order => $1 } ;
+                push @{ $opt->{'order_by'} }, { $order => $1 };
             }
             elsif ( $_ eq 'limit' ) { $opt->{rows}   = $v }
             elsif ( $_ eq 'skip' )  { $opt->{offset} = $v }
@@ -171,20 +158,6 @@ sub _tableDB {
     my $helper = $c->dbHelper;
     return $c->helpers->$helper->resultset( $c->table );
 }
-
-# sub sync_rec_with_post {
-#     my $c   = shift;
-#     my $rec = shift;
-#     $c->app->log->debug( Data::Dumper::Dumper( $c->req->params->to_hash ) );
-#     my %par = %{ $c->req->params->to_hash };
-#     while ( my ( $k, $v ) = each %par ) {
-#         unless ( $rec->$k && $v eq $rec->get_column($k) ) {
-#             $c->app->log->debug(
-#                 "$k was " . $rec->get_column($k) . " updated with $v" );
-#             $rec->$k($v);
-#         }
-#     }
-# }
 
 sub _resource_lookup {
     my $c  = shift;
