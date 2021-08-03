@@ -72,6 +72,11 @@ plan skip_all => <<EOF if ($@);
     Install $plugin_db to run these tests
 EOF
 
+eval "use DBD::SQLite";
+plan skip_all => <<EOF if ($@);
+    Install DBD::SQLite to run these tests
+EOF
+
 my $t = Test::Mojo->new('Skel');
 push @{ $t->app->renderer->paths }, $www;
 

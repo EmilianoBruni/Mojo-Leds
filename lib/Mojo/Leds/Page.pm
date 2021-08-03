@@ -50,7 +50,7 @@ sub render_html {
     while ( my ( $k, $v ) = each %$query ) {
         $c->stash( $k => $v );
     }
-    return { template => Mojo::Util::class_to_path( ref($c) ) =~ s/\.pm//r };
+    return { template => class_to_path( ref($c) ) =~ s/\.pm//r };
 }
 
 sub render_json {
