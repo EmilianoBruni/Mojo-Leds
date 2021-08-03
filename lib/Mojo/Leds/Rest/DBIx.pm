@@ -86,15 +86,15 @@ sub list {
     my $query = $c->param('query');
     return $c->$query(@_) if ($query);
 
-    my ( $qry, $opt, $with_count ) = $c->_qs2q;
+    my ( $qry, $opt, $rc ) = $c->_qs2q;
     my $rec  = $c->_dbfind( $qry, $opt );
     my @recs = $rec->all;
     my $ret  = [];
     foreach (@recs) {
         push @$ret, $c->_rec2json($_);
     }
-    if ($with_count) {
-        $ret = [ { count => $rec->pager->total_entries }, recs => $ret ];
+    if ($rc) {
+        $ret = { count => $rec->pager->total_entries , recs => $ret };
     }
 
     $c->render_json($ret);
@@ -134,22 +134,20 @@ sub _qs2q {
 
             # match regexp filter
             elsif (/^qre\[(.*?)\]/) {
+                $qry->{$1} = { -like => $v };
             }
             elsif (/^sort\[(.*?)\]/) {
                 my $order = $v == 1 ? '-asc' : '-desc';
-                push @{ $opt->{order_by} }, { $order => $1 };
+                push @{ $opt->{'order_by'} },  {$order => $1 } ;
             }
-            elsif ( $_ eq 'limit' ) { $opt->{rows} = $v }
-            elsif ( $_ eq 'skip' )  { $opt->{rows} = $v }
-            elsif ( $_ eq 'rc' )    { $rc          = $v }
-            elsif ( $_ eq 'page' )  { $opt->{page} = $v }
+            elsif ( $_ eq 'limit' ) { $opt->{rows}   = $v }
+            elsif ( $_ eq 'skip' )  { $opt->{offset} = $v }
+            elsif ( $_ eq 'rc' )    { $rc            = $v }
+            elsif ( $_ eq 'page' )  { $opt->{page}   = $v }
         }
+        $opt->{page} //= 1;
     }
 
-    # # simple sort, needs sort and order
-    # if ( defined $flt->{sort} && defined $flt->{order} ) {
-    #     $opt->{sort}->Push( $flt->{sort} => $flt->{order} eq 'asc' ? -1 : 1 );
-    # }
     $c->app->log->debug( 'Query url: '
           . Data::Dumper::Dumper($flt)
           . "\nDBIx search: "

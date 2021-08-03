@@ -10,33 +10,35 @@ sub bac {
     $c->render_json( { a => $c->param('opt') } );
 }
 
+# TABLE: test
 package Test::Skel::Schema::Result::Test;
 use base 'DBIx::Class::Core';
 
 __PACKAGE__->table("test");
 __PACKAGE__->add_columns(
-  "id",
-  {
-    data_type => "integer",
-    extra => { unsigned => 1 },
-    is_auto_increment => 1,
-    is_nullable => 0,
-  },
-  "fld",
-  { data_type => "varchar", is_nullable => 0, size => 50 },
-  "fld1",
-  { data_type => "varchar", is_nullable => 1, size => 50 },
+    "id",
+    {
+        data_type         => "integer",
+        extra             => { unsigned => 1 },
+        is_auto_increment => 1,
+        is_nullable       => 0,
+    },
+    "fld",
+    { data_type => "varchar", is_nullable => 0, size => 50 },
+    "fld1",
+    { data_type => "varchar", is_nullable => 1, size => 50 },
 );
 __PACKAGE__->set_primary_key("id");
-$INC{'Test/Skel/Schema/Result/Test.pm'} = 1;  # Tell Perl the module is already loaded.
+$INC{'Test/Skel/Schema/Result/Test.pm'} = 1;    # module is already loaded.
 
+# DB Schema
 package Test::Skel::Schema;
 use base 'DBIx::Class::Schema';
+
 # it not possible to call load_namespaces here, manual registration
 my $class = 'Test::Skel::Schema::Result::Test';
-__PACKAGE__->register_class('test', $class->new);
-$INC{'Test/Skel/Schema.pm'} = 1;  # Tell Perl the module is already loaded.
-
+__PACKAGE__->register_class( 'test', $class->new );
+$INC{'Test/Skel/Schema.pm'} = 1;                #  module is already loaded.
 
 package main;
 
@@ -46,9 +48,10 @@ use Test::More;
 use Test::Mojo;
 
 use Mojo::File 'path';
+
 #use Test::Skel::Schema;
 use lib;
-use DBD::SQLite; # here only for dzil AutoPrereqs
+use DBD::SQLite;    # here only for dzil AutoPrereqs
 
 my $site = path(__FILE__)->sibling('site');
 my $lib  = $site->child('lib')->to_string;
@@ -75,14 +78,17 @@ push @{ $t->app->renderer->paths }, $www;
 my $app = $t->app;
 my $r   = $app->routes;
 
-$app->plugin($plugin_db => {
-    schema => {
-        'Test::Skel::Schema' => 'dbi:SQLite:dbname=:memory:'
+$app->plugin(
+    $plugin_db => {
+        schema => {
+            'Test::Skel::Schema' => 'dbi:SQLite:dbname=:memory:'
+        }
     }
-});
+);
 
 # create table test
 $app->schema->deploy( { add_drop_table => 1 } );
+
 # load restify
 $app->plugin($plugin_rest);
 
@@ -132,7 +138,7 @@ $t->put_ok( "/rest/test/" . $ids[0] => json => { fld => 'value0' } )
 
 # get patched record
 $t->get_ok( "/rest/test/" . $ids[0] )->status_is(200)
-  ->json_is( '/fld' => 'value0' )->json_is('/fld1',undef);
+  ->json_is( '/fld' => 'value0' )->json_is( '/fld1', undef );
 
 # multiple add - listupdate
 my @m_adds;
@@ -147,32 +153,32 @@ $t->get_ok( "/rest/test?q[id]=" . $ids[10] )->status_is(200)
 $t->get_ok( "/rest/test?q[fld]=" . 'value10' )->status_is(200)
   ->json_is( '/0/fld' => 'value10' );
 
-# # get value20-value29 - qre[]
-# $t->get_ok( "/rest/test?qre[fld]=" . 'value2[0-9]' )->status_is(200)
-#   ->json_is( '/8/fld' => 'value28' );
-#
-# # get first 3 elements of value20-value29 - limit
-# $t->get_ok( "/rest/test?limit=3&qre[fld]=" . 'value2[0-9]' )->status_is(200)
-#   ->json_hasnt('/3')->json_is( '/2/fld' => 'value22' );
-#
-# # get 3 page 2, as above but with page - page
-# $t->get_ok( "/rest/test?page=2&limit=3&qre[fld]=" . 'value2[0-9]' )
-#   ->status_is(200)->json_hasnt('/6')->json_is( '/2/fld' => 'value25' );
-#
-# # sort 1 (default)
-# $t->get_ok( "/rest/test?sort[fld]=1&skip=3&limit=3&qre[fld]=" . 'value2[0-9]' )
-#   ->status_is(200)->json_hasnt('/6')->json_is( '/2/fld' => 'value25' );
-#
-# # sort -1
-# $t->get_ok( "/rest/test?sort[fld]=-1&skip=3&limit=3&qre[fld]=" . 'value2[0-9]' )
-#   ->status_is(200)->json_hasnt('/6')->json_is( '/2/fld' => 'value24' );
-#
-# # with_count
-# $t->get_ok(
-#     "/rest/test?rc=1&sort[fld]=-1&skip=3&limit=3&qre[fld]=" . 'value2[0-9]' )
-#   ->status_is(200)->json_is( '/count' => 10 )
-#   ->json_is( '/recs/2/fld' => 'value24' );
-#
+# get value2, value20-value29 - qre[]
+$t->get_ok( "/rest/test?qre[fld]=" . 'value2%' )->status_is(200)
+  ->json_is( '/9/fld' => 'value28' );
+
+# get first 3 elements of value20-value29 - limit
+$t->get_ok( "/rest/test?limit=3&qre[fld]=" . 'value2%' )->status_is(200)
+  ->json_hasnt('/3')->json_is( '/2/fld' => 'value21' );
+
+# get 3 page 2, as above but with page - page
+$t->get_ok( "/rest/test?page=2&limit=3&qre[fld]=" . 'value2%' )->status_is(200)
+  ->json_hasnt('/3')->json_is( '/2/fld' => 'value24' );
+
+# sort 1 (default)
+$t->get_ok( "/rest/test?sort[fld]=1&skip=3&limit=3&qre[fld]=" . 'value2%' )
+  ->status_is(200)->json_hasnt('/3')->json_is( '/2/fld' => 'value24' );
+
+# sort -1
+$t->get_ok( "/rest/test?sort[fld]=-1&skip=3&limit=3&qre[fld]=" . 'value2%' )
+  ->status_is(200)->json_hasnt('/3')->json_is( '/2/fld' => 'value24' );
+
+# with_count
+$t->get_ok(
+    "/rest/test?rc=1&sort[fld]=-1&skip=3&limit=3&qre[fld]=" . 'value2%' )
+  ->status_is(200)->json_is( '/count' => 11 )
+  ->json_is( '/recs/2/fld' => 'value24' );
+
 # delete ids
 $t->delete_ok("/rest/test/$_")->status_is(204) foreach (@ids);
 

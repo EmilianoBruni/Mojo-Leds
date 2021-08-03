@@ -129,15 +129,15 @@ $t->get_ok( "/rest/test?limit=3&qre[fld]=" . 'value2[0-9]' )->status_is(200)
 
 # get 3 page 2, as above but with page - page
 $t->get_ok( "/rest/test?page=2&limit=3&qre[fld]=" . 'value2[0-9]' )
-  ->status_is(200)->json_hasnt('/6')->json_is( '/2/fld' => 'value25' );
+  ->status_is(200)->json_hasnt('/3')->json_is( '/2/fld' => 'value25' );
 
 # sort 1 (default)
 $t->get_ok( "/rest/test?sort[fld]=1&skip=3&limit=3&qre[fld]=" . 'value2[0-9]' )
-  ->status_is(200)->json_hasnt('/6')->json_is( '/2/fld' => 'value25' );
+  ->status_is(200)->json_hasnt('/3')->json_is( '/2/fld' => 'value25' );
 
 # sort -1
 $t->get_ok( "/rest/test?sort[fld]=-1&skip=3&limit=3&qre[fld]=" . 'value2[0-9]' )
-  ->status_is(200)->json_hasnt('/6')->json_is( '/2/fld' => 'value24' );
+  ->status_is(200)->json_hasnt('/3')->json_is( '/2/fld' => 'value24' );
 
 # with_count
 $t->get_ok(
