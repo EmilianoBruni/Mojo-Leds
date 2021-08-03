@@ -9,9 +9,6 @@ sub startup() {
     # plugins
     $s->plugin( Config => { file => 'cfg/app.cfg' } );
 
-    # lo leggo due volte per valorizzare dentro al cfg app->config->...
-    $s->plugin( Config => { file => 'cfg/app.cfg' } );
-
     # log
     unless ( $s->app->mode eq 'development' ) {
         if ( $s->config->{log}->{path} ) {
