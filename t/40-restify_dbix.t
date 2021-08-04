@@ -1,13 +1,21 @@
 BEGIN {
     use Test::More;
-    use Test::Needs;
+
     # prereq tests
-    test_needs qw/
-        DBIx::Class
-        Mojolicious::Plugin::Restify::OtherActions
-        Mojolicious::Plugin::DBIC
-        DBD::SQLite
-    /;
+    my %mods = (
+        'DBIx::Class'                                => 0,
+        'Mojolicious::Plugin::Restify::OtherActions' => 0,
+        'Mojolicious::Plugin::DBIC'                  => 0,
+        'DBD::SQLite'                                => 0,
+    );
+    while ( my ( $k, $v ) = each %mods ) {
+        eval "use $k $v";
+        delete $mods{$k} unless ($@);
+    }
+    plan skip_all => "Install ["
+      . join( ', ', keys(%mods) )
+      . "] to run this test"
+      if ( keys %mods );
 }
 
 package Test::Skel::Test;
@@ -65,24 +73,6 @@ my $lib  = $site->child('lib')->to_string;
 my $www  = $site->child('www')->to_string;
 lib->import($lib);
 lib->import($www);
-
-# try to load the plugins for this DB
-# my $plugin_rest = 'Mojolicious::Plugin::Restify::OtherActions';
-# eval "use $plugin_rest";
-# plan skip_all => <<EOF if ($@);
-#     Install $plugin_rest to run these tests
-# EOF
-#
-# my $plugin_db = 'Mojolicious::Plugin::DBIC';
-# eval "use $plugin_db";
-# plan skip_all => <<EOF if ($@);
-#     Install $plugin_db to run these tests
-# EOF
-#
-# eval "use DBD::SQLite";
-# plan skip_all => <<EOF if ($@);
-#     Install DBD::SQLite to run these tests
-# EOF
 
 my $t = Test::Mojo->new('Skel');
 push @{ $t->app->renderer->paths }, $www;

@@ -1,12 +1,3 @@
-BEGIN {
-    use Test::More;
-    use Test::Needs;
-    # prereq tests
-    test_needs qw/
-        Mojolicious::Plugin::Mongodbv2
-        Mojolicious::Plugin::Restify::OtherActions
-    /;
-}
 
 package Test::Skel::Test;
 use Mojo::Base 'Mojo::Leds::Rest::MongoDB';
@@ -22,6 +13,24 @@ sub bac {
 
 package main;
 
+BEGIN {
+    use Test::More;
+
+    # prereq tests
+    my %mods = (
+        'Mojolicious::Plugin::Mongodbv2'             => 0,
+        'Mojolicious::Plugin::Restify::OtherActions' => 0
+    );
+    while ( my ( $k, $v ) = each %mods ) {
+        eval "use $k $v";
+        delete $mods{$k} unless ($@);
+    }
+    plan skip_all => "Install ["
+      . join( ', ', keys(%mods) )
+      . "] to run this test"
+      if ( keys %mods );
+}
+
 use Mojo::Base -strict;
 
 use Test::More;
@@ -35,19 +44,6 @@ my $lib  = $site->child('lib')->to_string;
 my $www  = $site->child('www')->to_string;
 lib->import($lib);
 lib->import($www);
-
-# try to load plugins for this DB
-# my $plugin_rest = 'Mojolicious::Plugin::Restify::OtherActions';
-# eval "use $plugin_rest";
-# plan skip_all => <<EOF if ($@);
-#     Install $plugin_rest to run these tests
-# EOF
-#
-# my $plugin_db = 'Mojolicious::Plugin::Mongodbv2';
-# eval "use $plugin_db";
-# plan skip_all => <<EOF if ($@);
-#     Install $plugin_db to run these tests
-# EOF
 
 my $t = Test::Mojo->new('Skel');
 push @{ $t->app->renderer->paths }, $www;
