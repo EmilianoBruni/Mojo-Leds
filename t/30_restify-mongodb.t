@@ -43,7 +43,7 @@ my $t = Test::Mojo->new('Skel');
 push @{ $t->app->renderer->paths }, $www;
 
 plan skip_all => <<EOF unless $t->app->config->{mongo_uri};
-    Set env TEST_MONGODB to a valid mongodb connection string
+    Set env TEST_MONGODB to a valid mongodb connection string to run these tests
 EOF
 
 my $app = $t->app;
