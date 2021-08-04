@@ -2,7 +2,6 @@ package Mojo::Leds::Page;
 
 use 5.014;    # because s///r usage
 use Mojo::Base 'Mojolicious::Controller';
-use File::Basename;
 use Mojo::Util qw(class_to_path);
 
 sub route {
