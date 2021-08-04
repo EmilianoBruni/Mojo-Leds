@@ -52,7 +52,7 @@ sub _update {
     return $c->_raise_error( 'Element not found', 404 ) unless ($rec);
 
     # annullo tutti i campi
-    $rec->$_(undef) foreach ( grep !/^${pk}$/, keys $c->_rec2json );
+    $rec->$_(undef) foreach ( grep !/^${pk}$/, keys %{$c->_rec2json} );
     while ( my ( $k, $v ) = each %$set ) {
         $rec->$k($v);
     }
