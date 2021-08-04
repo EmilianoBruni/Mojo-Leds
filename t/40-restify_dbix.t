@@ -1,3 +1,15 @@
+BEGIN {
+    use Test::More;
+    use Test::Needs;
+    # prereq tests
+    test_needs qw/
+        DBIx::Class
+        Mojolicious::Plugin::Restify::OtherActions
+        Mojolicious::Plugin::DBIC
+        DBD::SQLite
+    /;
+}
+
 package Test::Skel::Test;
 use Mojo::Base 'Mojo::Leds::Rest::DBIx';
 
@@ -12,7 +24,7 @@ sub bac {
 
 # TABLE: test
 package Test::Skel::Schema::Result::Test;
-use base 'DBIx::Class::Core';
+use Mojo::Base 'DBIx::Class::Core';
 
 __PACKAGE__->table("test");
 __PACKAGE__->add_columns(
@@ -33,7 +45,7 @@ $INC{'Test/Skel/Schema/Result/Test.pm'} = 1;    # module is already loaded.
 
 # DB Schema
 package Test::Skel::Schema;
-use base 'DBIx::Class::Schema';
+use Mojo::Base 'DBIx::Class::Schema';
 
 # it not possible to call load_namespaces here, manual registration
 my $class = 'Test::Skel::Schema::Result::Test';
@@ -44,14 +56,9 @@ package main;
 
 use Mojo::Base -strict;
 
-use Test::More;
 use Test::Mojo;
-
 use Mojo::File 'path';
-
-#use Test::Skel::Schema;
 use lib;
-use DBD::SQLite;    # here only for dzil AutoPrereqs
 
 my $site = path(__FILE__)->sibling('site');
 my $lib  = $site->child('lib')->to_string;
@@ -60,22 +67,22 @@ lib->import($lib);
 lib->import($www);
 
 # try to load the plugins for this DB
-my $plugin_rest = 'Mojolicious::Plugin::Restify::OtherActions';
-eval "use $plugin_rest";
-plan skip_all => <<EOF if ($@);
-    Install $plugin_rest to run these tests
-EOF
-
-my $plugin_db = 'Mojolicious::Plugin::DBIC';
-eval "use $plugin_db";
-plan skip_all => <<EOF if ($@);
-    Install $plugin_db to run these tests
-EOF
-
-eval "use DBD::SQLite";
-plan skip_all => <<EOF if ($@);
-    Install DBD::SQLite to run these tests
-EOF
+# my $plugin_rest = 'Mojolicious::Plugin::Restify::OtherActions';
+# eval "use $plugin_rest";
+# plan skip_all => <<EOF if ($@);
+#     Install $plugin_rest to run these tests
+# EOF
+#
+# my $plugin_db = 'Mojolicious::Plugin::DBIC';
+# eval "use $plugin_db";
+# plan skip_all => <<EOF if ($@);
+#     Install $plugin_db to run these tests
+# EOF
+#
+# eval "use DBD::SQLite";
+# plan skip_all => <<EOF if ($@);
+#     Install DBD::SQLite to run these tests
+# EOF
 
 my $t = Test::Mojo->new('Skel');
 push @{ $t->app->renderer->paths }, $www;
@@ -84,7 +91,7 @@ my $app = $t->app;
 my $r   = $app->routes;
 
 $app->plugin(
-    $plugin_db => {
+    'DBIC' => {
         schema => {
             'Test::Skel::Schema' => 'dbi:SQLite:dbname=:memory:'
         }
@@ -95,7 +102,7 @@ $app->plugin(
 $app->schema->deploy( { add_drop_table => 1 } );
 
 # load restify
-$app->plugin($plugin_rest);
+$app->plugin('Restify::OtherActions');
 
 my $rest = $r->under('/rest')->to( namespace => 'Test::Skel', cb => sub { 1 } );
 $app->restify->routes(

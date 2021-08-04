@@ -1,3 +1,13 @@
+BEGIN {
+    use Test::More;
+    use Test::Needs;
+    # prereq tests
+    test_needs qw/
+        Mojolicious::Plugin::Mongodbv2
+        Mojolicious::Plugin::Restify::OtherActions
+    /;
+}
+
 package Test::Skel::Test;
 use Mojo::Base 'Mojo::Leds::Rest::MongoDB';
 
@@ -27,17 +37,17 @@ lib->import($lib);
 lib->import($www);
 
 # try to load plugins for this DB
-my $plugin_rest = 'Mojolicious::Plugin::Restify::OtherActions';
-eval "use $plugin_rest";
-plan skip_all => <<EOF if ($@);
-    Install $plugin_rest to run these tests
-EOF
-
-my $plugin_db = 'Mojolicious::Plugin::Mongodbv2';
-eval "use $plugin_db";
-plan skip_all => <<EOF if ($@);
-    Install $plugin_db to run these tests
-EOF
+# my $plugin_rest = 'Mojolicious::Plugin::Restify::OtherActions';
+# eval "use $plugin_rest";
+# plan skip_all => <<EOF if ($@);
+#     Install $plugin_rest to run these tests
+# EOF
+#
+# my $plugin_db = 'Mojolicious::Plugin::Mongodbv2';
+# eval "use $plugin_db";
+# plan skip_all => <<EOF if ($@);
+#     Install $plugin_db to run these tests
+# EOF
 
 my $t = Test::Mojo->new('Skel');
 push @{ $t->app->renderer->paths }, $www;
@@ -50,13 +60,13 @@ my $app = $t->app;
 my $r   = $app->routes;
 
 $app->plugin(
-    $plugin_db => {
+    Mongodbv2 => {
         host               => $app->config->{mongo_uri},
         connect_timeout_ms => 300000,
         socket_timeout_ms  => 300000
     }
 );
-$app->plugin($plugin_rest);
+$app->plugin('Restify::OtherActions');
 
 my $rest = $r->under('/rest')->to( namespace => 'Test::Skel', cb => sub { 1 } );
 $app->restify->routes(

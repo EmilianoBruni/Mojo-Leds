@@ -21,19 +21,9 @@ my $app = $t->app;
 my $r   = $app->routes;
 
 $app->mode('production');
-$r->get(
-    '/500' => sub {
-        my $c = shift;
-        $c->reply->exception('Division by zero!');
-    }
-);
+$r->get( '/500' => sub { shift->reply->exception('Division by zero!'); } );
+$r->get( '/404' => sub { shift->reply->not_found; } );
 
-$r->get(
-    '/404' => sub {
-        my $c = shift;
-        $c->reply->not_found;
-    }
-);
 $t->get_ok('/500')->status_is(500)->content_like(qr/head back to the homepage/);
 $t->get_ok('/404')->status_is(404)->content_like(qr/does not exist/);
 

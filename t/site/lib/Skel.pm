@@ -1,7 +1,6 @@
 package Skel;
 
 use Mojo::Base 'Mojo::Leds';
-use MongoDB;
 
 sub startup {
 	my $s	= shift;
