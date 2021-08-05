@@ -70,7 +70,7 @@ sub _list {
     my ( $c, $rec, $qry, $opt, $rc ) = @_;
 
     my $recs = [];
-    while ($rec->next) {
+    while ($_ = $rec->next) {
         push @$recs, $c->_rec2json($_);
     }
     if ($rc) {
