@@ -67,17 +67,17 @@ sub _delete {
 }
 
 sub _list {
-    my ( $c, $recs, $qry, $opt, $rc ) = @_;
+    my ( $c, $rec, $qry, $opt, $rc ) = @_;
 
-    my $lrecs;
-    foreach (@$recs) {
-        push @$lrecs, $c->_rec2json($_);
+    my $recs = [];
+    while ($rec->next) {
+        push @$recs, $c->_rec2json($_);
     }
     if ($rc) {
-        $lrecs = { count => $rec->pager->total_entries, recs => $lrecs };
+        $recs = { count => $rec->pager->total_entries, recs => $recs };
     }
 
-    return $lrecs;
+    return $recs;
 }
 
 sub _listupdate {

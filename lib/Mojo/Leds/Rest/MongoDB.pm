@@ -76,8 +76,9 @@ sub _delete {
 }
 
 sub _list {
-    my ( $c, $recs, $qry, $opt, $rc ) = @_;
+    my ( $c, $rec, $qry, $opt, $rc ) = @_;
 
+    my $recs = [$rec->all];
     if ($rc) {
         my $count =
           ( exists $opt->{limit} || exists $opt->{page} || exists $opt->{skip} )

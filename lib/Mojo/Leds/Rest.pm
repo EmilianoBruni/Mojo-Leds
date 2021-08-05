@@ -40,7 +40,7 @@ sub list {
 
     my ( $qry, $opt, $rc ) = $c->_qs2q;
     my $rec  = $c->searchDB( $qry, $opt );
-    my $recs = $c->_list( [$rec->all], $qry, $opt, $rc );
+    my $recs = $c->_list( $rec, $qry, $opt, $rc );
 
     $c->render_json($recs);
 }
