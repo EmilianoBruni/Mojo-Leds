@@ -112,13 +112,13 @@ C<lib/MyApp/Controller/Example.pm>, the html code in C<templates/example/welcome
 the CSS code in C<public/css/example/welcome.css> and its JS code in
 C<public/js/example/welcome.js>.
 
-In Mojo::Leds the scructure is quite different
+In Mojo::Leds this structure is quite different
 
     myapp                      # Application directory
     |- script                  # Script directory
     |  +- my_app               # Application script
     |- lib                     # Library directory
-    |  |- MyApp.pm             # Application class
+    |  +- MyApp.pm             # Application class
     |- www                     # DocumentRoot :-)
         |- public              # Static files directory (served automatically)
         |  |- index.html       # Static Home page HTML
