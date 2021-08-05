@@ -69,14 +69,15 @@ sub _delete {
 sub _list {
     my ( $c, $recs, $qry, $opt, $rc ) = @_;
 
-    foreach (@recs) {
-        push @$recs, $c->_rec2json($_);
+    my $lrecs;
+    foreach (@$recs) {
+        push @$lrecs, $c->_rec2json($_);
     }
     if ($rc) {
-        $recs = { count => $rec->pager->total_entries, recs => $recs };
+        $lrecs = { count => $rec->pager->total_entries, recs => $lrecs };
     }
 
-    return $recs;
+    return $lrecs;
 }
 
 sub _listupdate {
