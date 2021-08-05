@@ -113,6 +113,7 @@ the CSS code in C<public/css/example/welcome.css> and its JS code in
 C<public/js/example/welcome.js>.
 
 In Mojo::Leds the scructure is quite different
+
     myapp                      # Application directory
     |- script                  # Script directory
     |  +- my_app               # Application script
@@ -127,11 +128,11 @@ In Mojo::Leds the scructure is quite different
         |     + app.js         # Global Static JS file
         |- layouts
         |  +- default.html.ep  # Layout template
-        +- welcome             # Directory for welcome page
-           |- page.pm          # Controller for welcome page
-           |- page.html.ep     # Template for welcome page
-           |- page.css         # CSS File for welcome page
-           +- page.js          # JS File for welcome page
+        +- welcome             # Welcome page: directory
+           |- page.pm          # Welcome page: controller
+           |- page.html.ep     # Welcome page: template
+           |- page.css         # Welcome page: CSS file
+           +- page.js          # Welcome page: JS file
 
 and here, controller, html code, css and js are all inside C<www/example/> directory.
 
