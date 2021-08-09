@@ -240,9 +240,9 @@ body {
     },
     plugins => [
         { RenderFile              => {} },
-        { AccessLog               => {} },
-        { LinkedContent           => {} },
-        { 'Restify::OtherActions' => {} },
-        { AutoReload              => {} },
+        # { AccessLog               => {} }, # generate an access log
+        # { LinkedContent           => {} }, # manage linked css and js
+        # { 'Restify::OtherActions' => {} }, # shortcuts & helpers for REST coll
+        # { AutoReload              => {} }, # reload browser when app changes
     ],
 }
