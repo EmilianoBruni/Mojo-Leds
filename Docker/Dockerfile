@@ -1,5 +1,5 @@
 #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
 # AUTHOR  :  Bruni Emiliano
 # DATE    :  2021-07-28
@@ -15,6 +15,7 @@
 #
 # UPDATES:
 #   AUTHOR          DATE        VERSION      COMMENTS
+#   Bruni Emiliano  2021-08-09  1.1          Create default app
 #   Bruni Emiliano  2021-07-29  1.0          Initial Version
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -25,9 +26,7 @@ FROM alpine:3.14
 MAINTAINER Bruni Emiliano <info@ebruni.it>
 
 # Expose all default Mojolicious Ports
-EXPOSE 8080 3000
-
-RUN mkdir -p /var/www
+EXPOSE 3000 9091
 
 # Install all necessary packages required by Mojo-Leds
 RUN apk update && apk add --no-cache make gcc perl-dev perl-app-cpanminus \
@@ -41,8 +40,22 @@ RUN apk update && apk add ca-certificates && update-ca-certificates && apk add w
 # Install Mojo::Leds
 RUN cpanm Mojo::Leds
 
+ENV APPCLASS=${app:-MyApp}
+ENV APPDIR=my_app
+
+RUN mkdir -p /var/www/
 # Set the working directory to mojolicious directory created above
 WORKDIR /var/www
 
-# Run a shell as the default command
-CMD ["/bin/sh"]
+# generate Mojo app directory strucecho $0ture
+RUN mojo generate leds_app $APPCLASS
+
+# calculate app directory decamelizing its class name
+#RUN perl -MMojo::Util -e "print 'export APPDIR=' . Mojo::Util::decamelize $APPCLASS" >> .env
+#ENV ENV=".env"
+
+# Set the working directory to mojolicious directory created above
+WORKDIR /var/www/${APPDIR}
+
+# Start app
+CMD ["hypnotoad", "-f", "script/my_app"]
