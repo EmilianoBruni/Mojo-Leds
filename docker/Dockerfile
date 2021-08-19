@@ -32,7 +32,7 @@ EXPOSE 3000 9091
 RUN apk update && apk add --no-cache make gcc perl-dev perl-app-cpanminus \
     perl-module-build perl-namespace-clean perl-boolean perl-json-maybexs \
     perl-test-fatal perl-path-tiny perl-moo perl-file-find-rule \
-    perl-number-compare perl-text-glob
+    perl-number-compare perl-text-glob musl-dev
 
 # For getting the latest wget
 RUN apk update && apk add ca-certificates && update-ca-certificates && apk add wget
