@@ -16,7 +16,7 @@
 #   <%= $global->{author}->{name} %>  <%= $_->{date} %>  <%= $_->{version} %>       <%= $_->{comment} %>
 % }
 #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
 %= $warning
 FROM <%= $from %>
@@ -40,7 +40,9 @@ RUN apk update && apk add --no-cache \\
 %   for ($release->{packages}->@*) {
     <%= $_ %> \\
 %   }
+  && true
 % }
+
 
 % if ($release->{env}) {
 %   for my $key (sort keys $release->{env}->%*) {
