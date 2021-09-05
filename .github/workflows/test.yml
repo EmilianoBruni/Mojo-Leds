@@ -5,7 +5,6 @@ name: Test Module
 # Controls when the workflow will run
 on:
   # Triggers the workflow on release:created
-  on:
   release:
     types: [created]
   
