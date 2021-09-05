@@ -37,13 +37,7 @@ jobs:
       - name: Fix ExtUtils::MakeMaker (for Perl 5.16 and 5.18)
         run: cpanm -n App::cpanminus ExtUtils::MakeMaker
         
-      - name: Install Dist::Zilla
-        run: cpanm -n Dist::Zilla
-        
-      - name: Install dependencies
-        run: |
-          dzil authordeps --missing | cpanm
-          cpanm -n --installdeps .
-      
-      - name: Run tests
-        run: prove -l t
+      - name: "Installing dependencies and testing all using dzil"
+        uses: jonasbn/github-action-perl-dist-zilla@0.2.0
+        with:
+          dzil-arguments: 'test --all'
