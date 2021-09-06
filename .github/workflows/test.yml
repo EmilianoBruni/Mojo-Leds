@@ -21,8 +21,7 @@ jobs:
       matrix:
         perl-version:
           - '5.20'
-          - '5.22'
-          - '5.30'
+          
     container:
       image: perl:${{ matrix.perl-version }}
 
@@ -30,12 +29,18 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
-      - name: perl -V
-        run: perl -V
         
       - name: Fix ExtUtils::MakeMaker (for Perl 5.16 and 5.18)
         run: cpanm -n App::cpanminus ExtUtils::MakeMaker
+        
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+          
+      - name: Install dependencies
+        run: |
+          dzil authordeps --missing | cpanm
+          dzil listdeps | cpanm
         
       - name: "Installing dependencies and testing all using dzil"
         uses: jonasbn/github-action-perl-dist-zilla@0.2.0
