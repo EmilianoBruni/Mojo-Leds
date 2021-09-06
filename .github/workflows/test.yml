@@ -33,13 +33,12 @@ jobs:
       - name: Fix ExtUtils::MakeMaker (for Perl 5.16 and 5.18)
         run: cpanm -n App::cpanminus ExtUtils::MakeMaker
           
-      - name: Install dependencies
+      - name: List files
         run: |
           ls
-          dzil authordeps --missing | cpanm
-          dzil listdeps | cpanm
         
       - name: "Installing dependencies and testing all using dzil"
         uses: jonasbn/github-action-perl-dist-zilla@0.2.0
         with:
+          entrypoint: ./.github/entrypoint.sh
           dzil-arguments: 'test --all'
