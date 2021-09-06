@@ -61,7 +61,8 @@ jobs:
 
             - name: Uncompress module
               run: |
-                tar zxvf *.gz --one-top-level=module --strip-components=1
+                mkdir module
+                tar zxvf *.gz -C module --strip-components=1
                 cd module
 
             - name: Install dependences
