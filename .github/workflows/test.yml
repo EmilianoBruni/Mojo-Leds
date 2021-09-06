@@ -59,22 +59,26 @@ jobs:
             - name: List files
               run: ls -al
 
+            - name: Create test folder
+              run: mkdir module
+
             - name: Uncompress module
-              run: |
-                mkdir module
-                tar zxvf *.gz -C module --strip-components=1
-              working-directory: ./module
+              run: tar zxvf *.gz -C module --strip-components=1
 
             - name: List files inside module
+              working-directory: ./module
               run: ls -al
 
             - name: Install dependences
+              working-directory: ./module
               run: cpanm --installdeps -n .
 
             - name: Make module
+              working-directory: ./module
               run: |
                 perl Makefile.PL
                 make
 
             - name: Test module
+              working-directory: ./module
               run: make test
