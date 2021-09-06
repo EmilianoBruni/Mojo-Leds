@@ -32,13 +32,10 @@ jobs:
         
       - name: Fix ExtUtils::MakeMaker (for Perl 5.16 and 5.18)
         run: cpanm -n App::cpanminus ExtUtils::MakeMaker
-        
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
           
       - name: Install dependencies
         run: |
+          ls
           dzil authordeps --missing | cpanm
           dzil listdeps | cpanm
         
