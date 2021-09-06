@@ -67,11 +67,11 @@ __END__
 =begin html
 
 <p>
-    <img alt="Top language: " src="https://img.shields.io/github/languages/top/emilianobruni/mojo-leds?style=plastic">
-    <img alt="github last commit" src="https://img.shields.io/github/last-commit/emilianobruni/mojo-leds?style=plastic">
     <a href="https://github.com/emilianobruni/mojo-leds/actions/workflows/test.yml">
         <img alt="github workflow tests" src="https://github.com/emilianobruni/mojo-leds/actions/workflows/test.yml/badge.svg">
     </a>
+    <img alt="Top language: " src="https://img.shields.io/github/languages/top/emilianobruni/mojo-leds">
+    <img alt="github last commit" src="https://img.shields.io/github/last-commit/emilianobruni/mojo-leds">
 </p>
 
 =end html
