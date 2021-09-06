@@ -35,7 +35,7 @@ jobs:
           
       - name: List files
         run: |
-          ls
+          ls -al
         
       - name: "Installing dependencies and testing all using dzil"
         uses: jonasbn/github-action-perl-dist-zilla@0.2.0
