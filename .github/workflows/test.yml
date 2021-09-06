@@ -50,9 +50,10 @@ jobs:
         with:
             name: checkout-share
 
-      # - name: List files
-      #   run: |
-      #     ls -al
+      - name: List files
+        run: |
+          ls -al
+          ls -al ./.github/
 
       - name: Fix ExtUtils::MakeMaker (for Perl 5.16 and 5.18)
         run: cpanm -n App::cpanminus ExtUtils::MakeMaker
