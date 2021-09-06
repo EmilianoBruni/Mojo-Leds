@@ -13,7 +13,7 @@ on:
 
 jobs:
     # fetch and build module
-    fetch and build:
+    Fetch-and-build:
         runs-on: ubuntu-latest
         container: ebruni/devel:dzil
         steps:
@@ -38,7 +38,7 @@ jobs:
                 name: build-share
                 path: ./*.tar.gz
     test:
-        needs: fetch and build
+        needs: Fetch-and-build
         # The type of runner that the job will run on
         runs-on: ubuntu-latest
         strategy:
