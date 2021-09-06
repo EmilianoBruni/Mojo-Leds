@@ -7,7 +7,7 @@ on:
   # Triggers the workflow on release:created
   release:
     types: [created]
-  
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -22,6 +22,14 @@ jobs:
 
       - name: Checkout Repo Action
         uses: actions/checkout@v2
+
+      - name: list files
+        run: ls ${{ github.workspace }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+            name: checkout-share
+            path: ${{ github.workspace }}
   test:
     needs: fetch
     # The type of runner that the job will run on
@@ -30,21 +38,27 @@ jobs:
       matrix:
         perl-version:
           - '5.20'
-          
+
     container:
       image: perl:${{ matrix.perl-version }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:        
-      - name: Fix ExtUtils::MakeMaker (for Perl 5.16 and 5.18)
-        run: cpanm -n App::cpanminus ExtUtils::MakeMaker
-          
+    steps:
+      # - name: Fix ExtUtils::MakeMaker (for Perl 5.16 and 5.18)
+      #   run: cpanm -n App::cpanminus ExtUtils::MakeMaker
+      #
+
+      - name: Download checkout from previous job
+        uses: actions/download-artifact@v2
+        with:
+            name: checkout-share
+
       - name: List files
         run: |
           ls -al
-        
-      - name: "Installing dependencies and testing all using dzil"
-        uses: jonasbn/github-action-perl-dist-zilla@0.2.0
-        with:
-          entrypoint: ./.github/entrypoint.sh
-          dzil-arguments: 'test --all'
+
+      # - name: "Installing dependencies and testing all using dzil"
+      #   uses: jonasbn/github-action-perl-dist-zilla@0.2.0
+      #   with:
+      #     entrypoint: ./.github/entrypoint.sh
+      #     dzil-arguments: 'test --all'
