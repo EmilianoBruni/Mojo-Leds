@@ -66,7 +66,13 @@ __END__
 
 =begin html
 
-<p><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/EmilianoBruni/Mojo-Leds?style=plastic"> <a href="https://travis-ci.com/EmilianoBruni/Mojo-Leds"><img alt="Travis tests" src="https://img.shields.io/travis/com/EmilianoBruni/Mojo-Leds?label=Travis%20tests&style=plastic"></a></p>
+<p>
+    <img alt="Top language: " src="https://img.shields.io/github/languages/top/emilianobruni/mojo-leds?style=plastic">
+    <img alt="github last commit" src="https://img.shields.io/github/last-commit/emilianobruni/mojo-leds?style=plastic">
+    <a href="https://github.com/emilianobruni/mojo-leds/actions/workflows/test.yml">
+        <img alt="github workflow tests" src="https://github.com/emilianobruni/mojo-leds/actions/workflows/test.yml/badge.svg">
+    </a>
+</p>
 
 =end html
 
