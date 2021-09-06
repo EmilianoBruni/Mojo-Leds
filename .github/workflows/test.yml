@@ -63,7 +63,10 @@ jobs:
               run: |
                 mkdir module
                 tar zxvf *.gz -C module --strip-components=1
-                cd module
+              working-directory: ./module
+
+            - name: List files inside module
+              run: ls -al
 
             - name: Install dependences
               run: cpanm --installdeps -n .
