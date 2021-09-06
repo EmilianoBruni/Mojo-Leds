@@ -1,5 +1,8 @@
 Changelog for Mojo-Leds
 
+1.08 2021-09-06T14:33:00
+ - Moved from travis CI to GitHub workflow.
+
 1.07 2021-08-09T22:33:53
  - Add comments to some plugins previously loaded in default app but not
    installed by default in the installation of Mojo::Leds
