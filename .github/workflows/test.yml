@@ -36,7 +36,7 @@ jobs:
               uses: actions/upload-artifact@v2
               with:
                 name: build-share
-                path: *.tar.gz
+                path: ./*.tar.gz
     test:
         needs: fetch and build
         # The type of runner that the job will run on
