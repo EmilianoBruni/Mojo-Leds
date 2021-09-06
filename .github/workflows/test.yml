@@ -23,8 +23,8 @@ jobs:
       - name: Checkout Repo Action
         uses: actions/checkout@v2
 
-      - name: list files
-        run: ls -al
+      # - name: list files
+      #   run: ls -al
 
       - uses: actions/upload-artifact@v2
         with:
@@ -44,21 +44,21 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # - name: Fix ExtUtils::MakeMaker (for Perl 5.16 and 5.18)
-      #   run: cpanm -n App::cpanminus ExtUtils::MakeMaker
-      #
 
       - name: Download checkout from previous job
         uses: actions/download-artifact@v2
         with:
             name: checkout-share
 
-      - name: List files
-        run: |
-          ls -al
+      # - name: List files
+      #   run: |
+      #     ls -al
 
-      # - name: "Installing dependencies and testing all using dzil"
-      #   uses: jonasbn/github-action-perl-dist-zilla@0.2.0
-      #   with:
-      #     entrypoint: ./.github/entrypoint.sh
-      #     dzil-arguments: 'test --all'
+      - name: Fix ExtUtils::MakeMaker (for Perl 5.16 and 5.18)
+        run: cpanm -n App::cpanminus ExtUtils::MakeMaker
+
+      - name: "Installing dependencies and testing all using dzil"
+        uses: jonasbn/github-action-perl-dist-zilla@0.2.0
+        with:
+          entrypoint: ./.github/entrypoint.sh
+          dzil-arguments: 'test --all'
