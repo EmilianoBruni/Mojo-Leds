@@ -58,6 +58,6 @@ LABEL org.opencontainers.image.licenses=Artistic-2.0
 LABEL org.opencontainers.image.source=https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile
 LABEL org.opencontainers.image.title=Mojo-Leds
 LABEL org.opencontainers.image.url=https://github.com/EmilianoBruni/Mojo-Leds
-LABEL org.opencontainers.image.version=1.3-mongodb
+LABEL org.opencontainers.image.version=1.4-mongodb
 
 CMD ["/bin/bash", "-c"]
