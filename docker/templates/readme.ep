@@ -1,34 +1,75 @@
-% #my $Title = $global->{title} =~s/^(\w)/\U$1/r;
-% my $Title = $global->{title};
-
+% use MetaCPAN::Client;
+% my $mcpan  = MetaCPAN::Client->new();
 %= $warning
+
+% my $Title = ucfirst($global->{title});
 
 # What is <%= $Title %>?
 
-%= $Title . " is " . $global->{description}
+%= $Title . " is a " . $global->{description}
 
-The images are based on <%= $from %> and provide installed together with this perl modules:
-%= join(",\n", map {"[$_](https://metacpan.org/pod/$_)"} $global->{perl_modules}->@*) . '.'
+All images, unless explicitly defined, are based on [<%= $from %>](https://hub.docker.com/repository/docker/<%= $from=~s/:(.*?)$//r %>) and provide installed together with these Perl modules:
+
+%= join(",\n", map {"* [$_](https://metacpan.org/pod/$_) v" . $mcpan->module($_)->version} $global->{perl_modules}->@*) . '.'
 
 # Supported tags and respective Dockerfile links
 
 % my $cmd = sub {return 'docker image ls --format "{{.Size}}" --filter "label=org.opencontainers.image.version=' . $global->{versions}->[0] . '" ' . $docker->{image} . ':' . shift};
 % my $cmde = $cmd->('latest');
-* <%= $Title %>: <%= $main->{dockerfile}->{link} %> (size: **<%= qx[$cmde] =~ s/\n$//r %>**)
+* <%= $global->{title} %>: <%= $main->{dockerfile}->{link} %> (size: **<%= qx[$cmde] =~ s/\n$//r %>**)
 % $cmd = sub {my $tag = shift; return 'docker image ls --format "{{.Size}}" --filter "label=org.opencontainers.image.version=' . $global->{versions}->[0] . '-' . $tag . '" ' . $docker->{image} . ":$tag"};
+
 % for (grep !/main/, keys $releases->%*) {
 % $cmde = $cmd->($_);
-* <%= $Title %>: <%= $releases->{$_}->{dockerfile}->{link} %> (size: **<%= qx[$cmde] =~ s/\n$//r %>**)
-with library
-%= join(",\n", map {"\t* [$_](https://metacpan.org/pod/$_)"} $releases->{$_}->{perl_modules}->@*) . '.'
-%
+* <%= $global->{title} %>: <%= $releases->{$_}->{dockerfile}->{link} %> (size: **<%= qx[$cmde] =~ s/\n$//r %>**) \
+% if($releases->{$_}->{from}) {
+based on [<%= $releases->{$_}->{from} %>](https://hub.docker.com/repository/docker/<%= $releases->{$_}->{from}=~s/:(.*?)$//r %>) \
 % }
+% if($releases->{$_}->{perl_modules}) {
+with these additional Perl modules
+
+%= join(",\n", map {"\t* [$_](https://metacpan.org/pod/$_) v" . $mcpan->module($_)->version} $releases->{$_}->{perl_modules}->@*) . '.'
+% }  # if
+% } # for
 
 # How to use this image
 
-Start the application as
+## Generate an example application.
 
-    $ docker run --rm -ti <%= $docker->{image} %>
+Go to your code folder, call Mojolicious to create the basic application
+structure with you as the owner.
+
+    $ docker run --rm -v "$(pwd):/var/www" ebruni/mojo-leds:latest mojo generate leds_app MyApp
+
+Start the application as daemon.
+
+    $ cd my_app
+    $ docker container run -d --rm -v "$(pwd):/var/www" -p 3000:3000 <%= $docker->{image} %> morbo script/my_app
+
+To run the container in the foreground and read the output, omit the `-d` and add `-ti`.
+
+    $ docker container run --rm -ti -v "$(pwd):/var/www" -p 3000:3000 <%= $docker->{image} %> morbo script/my_app
+
+Browse to [localhost:3000](http://localhost:3000) and edit the code in the
+current folder. If you are on Linux or MacOS, the server will restart whenever
+you change a file. On Windows this works if you use Docker Desktop with WSL 2.
+
+To switch from development to production an run the application as daemon in
+the full featured non-blocking web server start it with
+
+    $ docker container run -d --rm -v "$(pwd):/var/www" -p 3000:3000 <%= $docker->{image} %> morbo script/my_app prefork
+
+# Authors
+
+<%= $global->{author}->{name} . ' (' . $global->{author}->{abbr} . ') <' . $global->{author}->{mail} . '>' %>
+
+# Changes
+
+| AUTHOR | DATE | VER. | COMMENTS |
+|:---|:---:|:---:|:---|
+% for ($docker->{history}->@*) {
+| <%= $global->{author}->{abbr} %> | <%= $_->{date} %> | <%= $_->{version} %> | <%= $_->{comment} %> |
+% }
 
 # Source
 

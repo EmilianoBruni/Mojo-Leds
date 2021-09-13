@@ -1,9 +1,9 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# AUTHOR  :  Emiliano Bruni <info@ebruni.it>
-# DATE    :  2021-07-28
+# AUTHORS :  Emiliano Bruni (EB) <info@ebruni.it>
+# DATE    :  2021-09-09
 # PURPOSE :
-#   Generate a docker image with all necessary components required to Mojo::Leds [https://metacpan.org/pod/Mojo::Leds] framework components
+#   Docker image with all necessary components required to Mojo::Leds [https://metacpan.org/pod/Mojo::Leds] framework components .
 #
 #   This image is published in docker hub with handle: ebruni/mojo-leds
 #
@@ -11,12 +11,13 @@
 #   docker build -t mojo-leds .
 #
 # UPDATES:
-#   AUTHOR          DATE        VERSION   COMMENTS
-#   Emiliano Bruni  2021-07-29  1.0       Initial Version
-#   Emiliano Bruni  2021-08-09  1.1       Create default app
-#   Emiliano Bruni  2021-08-23  1.2       Standard starup & mongodb/micso tags
-#   Emiliano Bruni  2021-08-24  1.3       Reduced image size
-#   Emiliano Bruni  2021-09-07  1.4       Update to latest mojolicious:minion
+#   AUTHOR  DATE        VER  COMMENTS
+#   EB      2021-09-09  1.5  Update to latest parent container
+#   EB      2021-09-07  1.4  Update to latest mojolicious:minion
+#   EB      2021-08-24  1.3  Reduced image size
+#   EB      2021-08-23  1.2  Standard starup & mongodb/micso tags
+#   EB      2021-08-09  1.1  Create default app
+#   EB      2021-07-29  1.0  Initial Version
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
@@ -26,7 +27,7 @@
 #
 # do not edit it directly
 #
-FROM ebruni/mojolicious:minion-mongodb
+FROM ebruni/minion-backend-mongodb:mongodb
 MAINTAINER Emiliano Bruni <info@ebruni.it>
 
 WORKDIR /var/www
@@ -56,12 +57,12 @@ RUN apk update && apk add --no-cache \
 ARG NOW=not-set
 LABEL org.opencontainers.image.authors="Emiliano Bruni <info@ebruni.it>"
 LABEL org.opencontainers.image.created=$NOW
-LABEL org.opencontainers.image.description="Generate a docker image with all necessary components required to Mojo::Leds [https://metacpan.org/pod/Mojo::Leds] framework components"
+LABEL org.opencontainers.image.description="docker image with all necessary components required to Mojo::Leds [https://metacpan.org/pod/Mojo::Leds] framework components ."
 LABEL org.opencontainers.image.documentation=https://github.com/EmilianoBruni/Mojo-Leds/blob/master/README.pod
 LABEL org.opencontainers.image.licenses=Artistic-2.0
 LABEL org.opencontainers.image.source=https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mongodb/Dockerfile
-LABEL org.opencontainers.image.title=Mojo-Leds
+LABEL org.opencontainers.image.title=Mojo::Leds
 LABEL org.opencontainers.image.url=https://github.com/EmilianoBruni/Mojo-Leds
-LABEL org.opencontainers.image.version=1.4-micso-mongodb
+LABEL org.opencontainers.image.version=1.5-micso-mongodb
 
 CMD ["/bin/bash", "-c"]
