@@ -42,7 +42,7 @@ sub run {
     $self->render_to_rel_file( 'welcomecss', "$name/www/$dir/index.css" );
 
     # Static file
-    $self->render_to_rel_file( 'static', "$name/public/index.html" );
+    $self->render_to_rel_file( 'static', "$name/www/public/index.html" );
 
     # Test
     $self->render_to_rel_file( 'test', "$name/t/basic.t", { class => $class } );
