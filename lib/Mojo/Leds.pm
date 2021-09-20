@@ -82,11 +82,11 @@ __END__
 
 =head1 DESCRIPTION
 
-Leds is a Mojolicious app to use a filesystem similiar to classical web site
+Mojo::Leds is a L<Mojolicious> app to use a filesystem similiar to classical web site
 
 =head1 DIFFERENCES WITH MOJOLICIOUS
 
-L<Mojolicious> applications use a filesystem structure closer to a CPAN distribution
+Mojolicious applications use a filesystem structure closer to a CPAN distribution
 which is not (IMHO) intuitive.
 
 This is a classical Mojolicios applications
@@ -121,6 +121,8 @@ C<public/js/example/welcome.js>.
 In Mojo::Leds this structure is quite different
 
     myapp                      # Application directory
+    |- cfg                     # Config directory
+       +- app.cfg              # App config file
     |- script                  # Script directory
     |  +- my_app               # Application script
     |- lib                     # Library directory
@@ -135,16 +137,17 @@ In Mojo::Leds this structure is quite different
         |- layouts
         |  +- default.html.ep  # Layout template
         +- welcome             # Welcome page: directory
-           |- page.pm          # Welcome page: controller
-           |- page.html.ep     # Welcome page: template
-           |- page.css         # Welcome page: CSS file
-           +- page.js          # Welcome page: JS file
+           |- index.pm         # Welcome page: controller
+           |- index.html.ep    # Welcome page: template
+           |- index.css        # Welcome page: CSS file
+           +- index.js         # Welcome page: JS file
 
 and here, controller, html code, css and js are all inside C<www/example/> directory.
 
 =head1 BUGS/CONTRIBUTING
 
 Please report any bugs through the web interface at L<https://github.com/EmilianoBruni/Mojo-Leds/issues>
+
 If you want to contribute changes or otherwise involve yourself in development, feel free to fork the Git repository from
 L<https://github.com/EmilianoBruni/Mojo-Leds/>.
 
