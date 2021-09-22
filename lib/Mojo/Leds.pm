@@ -8,7 +8,9 @@ sub startup() {
     my $s = shift;
 
     # plugins
-    $s->plugin( Config => { file => 'cfg/app.cfg' } );
+    $s->plugin( Config => { default => {docs_root => 'www' }} );
+    $s->plugin( Config => { file => 'cfg/app.cfg' } )
+        if (-e $s->home->rel_file('cfg/app.cfg'));
 
     # log
     unless ( $s->app->mode eq 'development' ) {
