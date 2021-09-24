@@ -1,5 +1,7 @@
 package Mojo::Leds::Plugin::CommonRoutes;
 
+# ABSTRACT: Add routes to get app informations (library version, routes,...)
+
 use Mojo::Base 'Mojolicious::Plugin';
 use Mojo::File qw/curfile/;
 use Net::Domain qw(hostname);
