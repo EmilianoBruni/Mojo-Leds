@@ -7,21 +7,21 @@ Mojo::Leds is a docker image with all necessary components required to Mojo::Led
 
 All images, unless explicitly defined, are based on [ebruni/mojolicious](https://hub.docker.com/repository/docker/ebruni/mojolicious) and provide installed together with these Perl modules:
 
-* [Mojo::Leds](https://metacpan.org/pod/Mojo::Leds) v1.10.
+* [Mojo::Leds](https://metacpan.org/pod/Mojo::Leds) v1.11.
 
 # Supported tags and respective Dockerfile links
 
-* Mojo::Leds: [1.6, latest (main/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/main/Dockerfile) (size: **57.6MB**)
+* Mojo::Leds: [1.7, latest (main/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/main/Dockerfile) (size: **57.6MB**)
 
-* Mojo::Leds: [1.6-mongodb, mongodb (mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile) (size: **62.2MB**) based on [ebruni/mojolicious:mongodb](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
-
-	* [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04.
-* Mojo::Leds: [1.6-micso-mongodb, micso-mongodb (micso-mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mongodb/Dockerfile) (size: **112MB**) based on [ebruni/minion-backend-mongodb:mongodb](https://hub.docker.com/repository/docker/ebruni/minion-backend-mongodb) with these additional Perl modules
+* Mojo::Leds: [1.7-micso-mongodb, micso-mongodb (micso-mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mongodb/Dockerfile) (size: **112MB**) based on [ebruni/minion-backend-mongodb:mongodb](https://hub.docker.com/repository/docker/ebruni/minion-backend-mongodb) with these additional Perl modules
 
 	* [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04,
 	* [Mojolicious::Plugin::AccessLog](https://metacpan.org/pod/Mojolicious::Plugin::AccessLog) v0.010001,
 	* [Mojolicious::Plugin::AutoReload](https://metacpan.org/pod/Mojolicious::Plugin::AutoReload) v0.010,
 	* [Mojolicious::Plugin::LinkedContent::v9](https://metacpan.org/pod/Mojolicious::Plugin::LinkedContent::v9) v0.10.
+* Mojo::Leds: [1.7-mongodb, mongodb (mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile) (size: **62.2MB**) based on [ebruni/mojolicious:mongodb](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
+
+	* [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04.
 
 # How to use this image
 
@@ -58,6 +58,7 @@ Emiliano Bruni (EB) <info@ebruni.it>
 
 | AUTHOR | DATE | VER. | COMMENTS |
 |:---|:---:|:---:|:---|
+| EB | 2021-09-24 | 1.7 | Update to Mojo::Leds v.1.11 and backend v.1.10 |
 | EB | 2021-09-20 | 1.6 | Update to Mojo::Leds 1.10 |
 | EB | 2021-09-09 | 1.5 | Update to latest parent container |
 | EB | 2021-09-07 | 1.4 | Update to latest mojolicious:minion |
