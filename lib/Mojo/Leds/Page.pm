@@ -8,42 +8,33 @@ sub route {
     my $s = shift;
 
     my $format = $s->accepts;
-    $s->app->types->type(
-        js   => 'application/javascript',
-        css  => 'text/css',
-        xls  => 'application/vnd.ms-excel',
-        text => 'text/plain',
-        txt  => 'text/plain',
-    );
     $format = $format->[0] || 'html' if ( ref($format) eq 'ARRAY' );
     if ( $s->match->path_for->{path} =~ /\.(\w+)$/ ) {
 
-        # forzo il formato dell'estensione del file richiesto
+        # force format to file extension
         $format = $1 if ( $format eq 'html' || $format eq 'htm' );
     }
+    $s->stash( 'format', $format );
 
-    # occhio che respond_to non va bene perche' sembra chiamare
-    # comunque tutte le funzioni
-    for ($format) {
-        if    (/^html?/) { my $r = $s->render_html; $s->render(%$r) if ($r) }
-        elsif ( $_ eq 'txt' ) {
-            my $r = $s->render_html;
-            $s->render(%$r) if ($r);
-        }
-        elsif ( $_ eq 'json' ) { $s->render( json => $s->render_json ) }
-        elsif ( $_ eq 'text' ) { $s->render( text => $s->render_text ) }
+    $s->respond_to(
+        html => sub { shift->render_pm },
+        json => { json => $s->render_json },
+        css  => sub { shift->render_static_file },
+        js   => sub { shift->render_static_file },
+        any  => { text => '', status => 204 }
+    );
 
-        # match xxx.model.js ad esempio
-        elsif (/^(\w+\.)?js$/)  { $s->render_static_file }
-        elsif (/^(\w+\.)?css$/) { $s->render_static_file }
-        else                    { $s->render( { text => '', status => 204 } ) }
-    }
+}
+
+sub render_pm {
+    my $s = shift;
+    $s->render_maybe( %{ $s->render_html } ) or $s->reply->not_found;
 }
 
 sub render_html {
     my $c = shift;
 
-    # per uso in successive chiamate (html -> json ad esempio)
+    # needed for recursive calls (html -> json as an example)
     my $query = $c->req->params->to_hash;
     $c->session->{query} = $query;
     while ( my ( $k, $v ) = each %$query ) {
@@ -55,37 +46,6 @@ sub render_html {
 sub render_json {
     my $c = shift;
     return {};
-}
-
-sub render_text {
-    my $c = shift;
-
-    my $json  = $c->render_json;    # default try to get json data from page
-    my $data0 = $json->{data0};     # json => {"data0": [...]}
-    my $str   = '';
-    my $fmt   = '%24s | ';
-
-    # title
-    my $rowd = $data0->[0];
-    foreach my $key ( keys %$rowd ) {
-        if ( length($key) > 24 ) {
-            $key = substr( $key, 0, 21 ) . '...';
-        }
-        $str .= sprintf( $fmt, $key );
-    }
-    $str .= "\n";
-
-    foreach my $rowd (@$data0) {
-        foreach my $val ( values %$rowd ) {
-            if ( length($val) > 24 ) {
-                $val = substr( $val, 0, 21 ) . '...';
-            }
-            $str .= sprintf( $fmt, $val );
-        }
-        $str .= "\n";
-    }
-
-    return $str;
 }
 
 sub render_static_file {
