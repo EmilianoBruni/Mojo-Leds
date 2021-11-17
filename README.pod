@@ -14,7 +14,7 @@ Mojo::Leds - Leds aka Light Environment (emi) for Development System based on Mo
 
 =head1 VERSION
 
-version 1.11
+version 1.12
 
 =head1 SYNOPSIS
 
