@@ -9,6 +9,7 @@ sub route {
 
     my $format = $s->accepts;
     $format = $format->[0] || 'html' if ( ref($format) eq 'ARRAY' );
+    $format =~ s/^(.*?)\.//;    # replace xxxx.js -> js;
     if ( $s->match->path_for->{path} =~ /\.(\w+)$/ ) {
 
         # force format to file extension
@@ -27,7 +28,11 @@ sub route {
 }
 
 sub render_pm {
-    my $s = shift;
+    my $s           = shift;
+    my $render_html = $s->render_html;
+
+    # if undef we suppose that &render_html do the render job by itself
+    return unless $render_html;
     $s->render_maybe( %{ $s->render_html } ) or $s->reply->not_found;
 }
 
