@@ -23,8 +23,6 @@ my $r   = $app->routes;
 
 $app->plugin('Mojo::Leds::Plugin::CommonRoutes');
 
-use Data::Printer;
-
 $t->get_ok("/version")->status_is(200)->json_is( '/class' => $package )
   ->json_is( '/version' => $version );
 
