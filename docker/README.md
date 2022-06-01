@@ -15,13 +15,13 @@ All images, unless explicitly defined, are based on [ebruni/mojolicious](https:/
 
 * Mojo::Leds: [1.14-mongodb, mongodb (mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile) (size: **62.2MB**) based on [ebruni/mojolicious:mongodb](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
 
-	* [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04.
+  * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04.
 * Mojo::Leds: [1.14-micso-mongodb, micso-mongodb (micso-mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mongodb/Dockerfile) (size: **72.1MB**) based on [ebruni/minion-backend-mongodb:mongodb](https://hub.docker.com/repository/docker/ebruni/minion-backend-mongodb) with these additional Perl modules
 
-	* [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04,
-	* [Mojolicious::Plugin::AccessLog](https://metacpan.org/pod/Mojolicious::Plugin::AccessLog) v0.010001,
-	* [Mojolicious::Plugin::AutoReload](https://metacpan.org/pod/Mojolicious::Plugin::AutoReload) v0.010,
-	* [Mojolicious::Plugin::LinkedContent::v9](https://metacpan.org/pod/Mojolicious::Plugin::LinkedContent::v9) v0.10.
+  * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04,
+  * [Mojolicious::Plugin::AccessLog](https://metacpan.org/pod/Mojolicious::Plugin::AccessLog) v0.010001,
+  * [Mojolicious::Plugin::AutoReload](https://metacpan.org/pod/Mojolicious::Plugin::AutoReload) v0.010,
+  * [Mojolicious::Plugin::LinkedContent::v9](https://metacpan.org/pod/Mojolicious::Plugin::LinkedContent::v9) v0.10.
 
 # How to use this image
 
