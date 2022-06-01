@@ -41,7 +41,6 @@ sub render_html {
 
     # needed for recursive calls (html -> json as an example)
     my $query = $c->req->params->to_hash;
-    $c->session->{query} = $query;
     while ( my ( $k, $v ) = each %$query ) {
         $c->stash( $k => $v );
     }
