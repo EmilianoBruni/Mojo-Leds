@@ -18,10 +18,10 @@ sub route {
     $s->stash( 'format', $format );
 
     $s->respond_to(
-        html => sub { shift->render_pm },
-        json => { json => $s->render_json },
-        css  => sub { shift->render_static_file },
-        js   => sub { shift->render_static_file },
+        html => sub { $s->render_pm },
+        json => sub { $s->render( json => $s->render_json ) },
+        css  => sub { $s->render_static_file },
+        js   => sub { $s->render_static_file },
         any  => { text => '', status => 204 }
     );
 
