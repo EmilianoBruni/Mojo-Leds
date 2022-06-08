@@ -1,7 +1,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
 # AUTHORS :  Emiliano Bruni (EB) <info@ebruni.it>
-# DATE    :  2022-06-07
+# DATE    :  2022-06-08
 # PURPOSE :
 #   Docker image with all necessary components required to Mojo::Leds [https://metacpan.org/pod/Mojo::Leds] framework components .
 #
@@ -12,6 +12,7 @@
 #
 # UPDATES:
 #   AUTHOR  DATE        VER  COMMENTS
+#   EB      2022-06-08  1.17  Update to Mojo::Leds v.1.15
 #   EB      2022-06-07  1.16  Update to Mojolicious v.9.26
 #   EB      2022-06-07  1.15  Update to Mojo::Leds v.1.14
 #   EB      2022-06-01  1.14  Update to Mojo::Leds v.1.13
@@ -69,6 +70,6 @@ LABEL org.opencontainers.image.licenses=Artistic-2.0
 LABEL org.opencontainers.image.source=https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile
 LABEL org.opencontainers.image.title=Mojo::Leds
 LABEL org.opencontainers.image.url=https://github.com/EmilianoBruni/Mojo-Leds
-LABEL org.opencontainers.image.version=1.16-mongodb
+LABEL org.opencontainers.image.version=1.17-mongodb
 
 CMD ["/bin/bash", "-c"]
