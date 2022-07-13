@@ -40,7 +40,7 @@
 #
 # do not edit it directly
 #
-FROM ebruni/mojolicious:mongodb
+FROM ebruni/mojolicious:mysql
 MAINTAINER Emiliano Bruni <info@ebruni.it>
 
 WORKDIR /var/www
@@ -53,13 +53,20 @@ RUN apk update && apk add --no-cache \
   && cpanm --no-wget -n \
     Mojo::Leds \
   && rm -r /root/.cpanm \
+ && apk add --no-cache \
+    musl-dev \
 && cpanm --no-wget -n \
-    Mojolicious::Plugin::Restify::OtherActions \
+    DBIx::Class::ResultSet::HashRef \
+    DBIx::Class::TimeStamp \
+    DBIx::Class::InflateColumn::DateTime \
+    DBIx::Class::InflateColumn::Serializer \
+    DateTime::Format::ISO8601 \
   && rm -r /root/.cpanm \
   && apk del \
     make \
     gcc \
     perl-dev \
+    musl-dev \
   && true
 
 ARG NOW=not-set
@@ -68,9 +75,9 @@ LABEL org.opencontainers.image.created=$NOW
 LABEL org.opencontainers.image.description="docker image with all necessary components required to Mojo::Leds [https://metacpan.org/pod/Mojo::Leds] framework components ."
 LABEL org.opencontainers.image.documentation=https://github.com/EmilianoBruni/Mojo-Leds/blob/master/README.pod
 LABEL org.opencontainers.image.licenses=Artistic-2.0
-LABEL org.opencontainers.image.source=https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile
+LABEL org.opencontainers.image.source=https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mysql/Dockerfile
 LABEL org.opencontainers.image.title=Mojo::Leds
 LABEL org.opencontainers.image.url=https://github.com/EmilianoBruni/Mojo-Leds
-LABEL org.opencontainers.image.version=1.18-mongodb
+LABEL org.opencontainers.image.version=1.18-micso-mysql
 
 CMD ["/bin/bash", "-c"]
