@@ -12,7 +12,7 @@
 #
 # UPDATES:
 #   AUTHOR  DATE        VER  COMMENTS
-#   EB      2022-07-13  1.15  Includes mysql options
+#   EB      2022-07-13  1.18  Includes mysql options
 #   EB      2022-06-08  1.17  Update to Mojo::Leds v.1.15
 #   EB      2022-06-07  1.16  Update to Mojolicious v.9.26
 #   EB      2022-06-07  1.15  Update to Mojo::Leds v.1.14

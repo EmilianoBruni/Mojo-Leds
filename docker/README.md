@@ -13,12 +13,6 @@ All images, unless explicitly defined, are based on [ebruni/mojolicious](https:/
 
 * Mojo::Leds: [1.18, latest (main/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/main/Dockerfile) (size: **57.6MB**)
 
-* Mojo::Leds: [1.18-micso-mongodb, micso-mongodb (micso-mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mongodb/Dockerfile) (size: **72.1MB**) based on [ebruni/minion-backend-mongodb:mongodb](https://hub.docker.com/repository/docker/ebruni/minion-backend-mongodb) with these additional Perl modules
-
-  * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04,
-  * [Mojolicious::Plugin::AccessLog](https://metacpan.org/pod/Mojolicious::Plugin::AccessLog) v0.010001,
-  * [Mojolicious::Plugin::AutoReload](https://metacpan.org/pod/Mojolicious::Plugin::AutoReload) v0.010,
-  * [Mojolicious::Plugin::LinkedContent::v9](https://metacpan.org/pod/Mojolicious::Plugin::LinkedContent::v9) v0.10.
 * Mojo::Leds: [1.18-micso-mysql, micso-mysql (micso-mysql/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mysql/Dockerfile) (size: **133MB**) based on [ebruni/mojolicious:mysql](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
 
   * [DBIx::Class::ResultSet::HashRef](https://metacpan.org/pod/DBIx::Class::ResultSet::HashRef) v1.002,
@@ -29,13 +23,18 @@ All images, unless explicitly defined, are based on [ebruni/mojolicious](https:/
 * Mojo::Leds: [1.18-mongodb, mongodb (mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile) (size: **62.2MB**) based on [ebruni/mojolicious:mongodb](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
 
   * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04.
-* Mojo::Leds: [1.18-mysql, mysql (mysql/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mysql/Dockerfile) (size: **86.6MB**) based on [ebruni/mojolicious:mysql](https://hub.docker.com/repository/docker/ebruni/mojolicious) 
+* Mojo::Leds: [1.18-mysql, mysql (mysql/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mysql/Dockerfile) (size: **86.6MB**) based on [ebruni/mojolicious:mysql](https://hub.docker.com/repository/docker/ebruni/mojolicious) * Mojo::Leds: [1.18-micso-mongodb, micso-mongodb (micso-mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mongodb/Dockerfile) (size: **72.1MB**) based on [ebruni/minion-backend-mongodb:mongodb](https://hub.docker.com/repository/docker/ebruni/minion-backend-mongodb) with these additional Perl modules
+
+  * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04,
+  * [Mojolicious::Plugin::AccessLog](https://metacpan.org/pod/Mojolicious::Plugin::AccessLog) v0.010001,
+  * [Mojolicious::Plugin::AutoReload](https://metacpan.org/pod/Mojolicious::Plugin::AutoReload) v0.010,
+  * [Mojolicious::Plugin::LinkedContent::v9](https://metacpan.org/pod/Mojolicious::Plugin::LinkedContent::v9) v0.10.
+
 # How to use this image
 
 ## Generate an example application.
 
-Go to your code folder, call Mojolicious to create the basic application
-structure with you as the owner.
+Go to your code folder, call Mojolicious to create the basic application structure with you as the owner.
 
     $ docker run --rm -v "$(pwd):/var/www" ebruni/mojo-leds:latest mojo generate leds_app MyApp
 
@@ -48,12 +47,9 @@ To run the container in the foreground and read the output, omit the `-d` and ad
 
     $ docker container run --rm -ti -v "$(pwd):/var/www" -p 3000:3000 ebruni/mojo-leds morbo script/my_app
 
-Browse to [localhost:3000](http://localhost:3000) and edit the code in the
-current folder. If you are on Linux or MacOS, the server will restart whenever
-you change a file. On Windows this works if you use Docker Desktop with WSL 2.
+Browse to [localhost:3000](http://localhost:3000) and edit the code in the current folder. If you are on Linux or MacOS, the server will restart whenever you change a file. On Windows this works if you use Docker Desktop with WSL 2.
 
-To switch from development to production an run the application as daemon in
-the full featured non-blocking web server start it with
+To switch from development to production an run the application as daemon in the full featured non-blocking web server start it with
 
     $ docker container run -d --rm -v "$(pwd):/var/www" -p 3000:3000 ebruni/mojo-leds morbo script/my_app prefork
 
@@ -65,7 +61,7 @@ Emiliano Bruni (EB) <info@ebruni.it>
 
 | AUTHOR | DATE | VER. | COMMENTS |
 |:---|:---:|:---:|:---|
-| EB | 2022-07-13 | 1.15 | Includes mysql options |
+| EB | 2022-07-13 | 1.18 | Includes mysql options |
 | EB | 2022-06-08 | 1.17 | Update to Mojo::Leds v.1.15 |
 | EB | 2022-06-07 | 1.16 | Update to Mojolicious v.9.26 |
 | EB | 2022-06-07 | 1.15 | Update to Mojo::Leds v.1.14 |
