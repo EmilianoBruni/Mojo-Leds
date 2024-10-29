@@ -1,0 +1,14 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+	"name": "Mojo-Leds",
+	"dockerComposeFile": "docker/docker-compose.vscode.yml",
+	"service": "dev",
+	"workspaceFolder": "/ws/${localWorkspaceFolderBasename}",
+	"forwardPorts": [3000],
+	"customizations": {
+        "vscode": {
+            "extensions": ["oderwat.indent-rainbow", "github.copilot", "github.copilot-chat"]
+        }
+    },
+	"initializeCommand": "echo Initialize...." // this is a workaround for a bug, remove if it works well without it
+}

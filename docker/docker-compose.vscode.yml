@@ -1,0 +1,23 @@
+services:
+    dev:
+        image: mojo-leds-dev
+        build: 
+            context: ../
+            dockerfile: docker/dev/Dockerfile
+            args:
+                - IDIR=Mojo-Leds
+                #- BMODE=production # default development on Dockerfile
+        volumes:
+            - ../:/ws/Mojo-Leds:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+        command: sleep infinity
+        deploy:
+            resources:
+                limits:
+                    cpus: 2.0
+
+networks:
+    default:
+        name: docker_default
+        external: true
