@@ -13,6 +13,9 @@ All images, unless explicitly defined, are based on [ebruni/mojolicious](https:/
 
 * Mojo::Leds: [1.18, latest (main/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/main/Dockerfile) (size: **57.6MB**)
 
+* Mojo::Leds: [1.18-mongodb, mongodb (mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile) (size: **62.2MB**) based on [ebruni/mojolicious:mongodb](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
+
+  * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04.
 * Mojo::Leds: [1.18-micso-mysql, micso-mysql (micso-mysql/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mysql/Dockerfile) (size: **133MB**) based on [ebruni/mojolicious:mysql](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
 
   * [DBIx::Class::ResultSet::HashRef](https://metacpan.org/pod/DBIx::Class::ResultSet::HashRef) v1.002,
@@ -20,9 +23,6 @@ All images, unless explicitly defined, are based on [ebruni/mojolicious](https:/
   * [DBIx::Class::InflateColumn::DateTime](https://metacpan.org/pod/DBIx::Class::InflateColumn::DateTime) v0.082843,
   * [DBIx::Class::InflateColumn::Serializer](https://metacpan.org/pod/DBIx::Class::InflateColumn::Serializer) v0.09,
   * [DateTime::Format::ISO8601](https://metacpan.org/pod/DateTime::Format::ISO8601) v0.16.
-* Mojo::Leds: [1.18-mongodb, mongodb (mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile) (size: **62.2MB**) based on [ebruni/mojolicious:mongodb](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
-
-  * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04.
 * Mojo::Leds: [1.18-mysql, mysql (mysql/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mysql/Dockerfile) (size: **86.6MB**) based on [ebruni/mojolicious:mysql](https://hub.docker.com/repository/docker/ebruni/mojolicious) * Mojo::Leds: [1.18-micso-mongodb, micso-mongodb (micso-mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mongodb/Dockerfile) (size: **72.1MB**) based on [ebruni/minion-backend-mongodb:mongodb](https://hub.docker.com/repository/docker/ebruni/minion-backend-mongodb) with these additional Perl modules
 
   * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04,
