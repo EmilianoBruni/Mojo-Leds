@@ -1,16 +1,20 @@
-FROM ebruni/mojolicious
+FROM ebruni/devel:dzil
 
 ARG IDIR
 
-ENV TZ="Europe/Rome"
+WORKDIR /usr/src/Mojo-Leds
 
-RUN apk add --no-cache tzdata sudo shadow git build-base perl-dev musl-dev && \
+RUN apk add --no-cache sudo shadow && \
     rm -rf /var/cache/apk/* && \
     adduser -g "Developer" -D -u 1001 dev && \
     echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/dev 
 
-USER dev
+COPY . .
+RUN { [ -f dist.ini ] && \
+    dzil listdeps | cpanm --no-wget --notest || true; } \
+    && { [ -d /root/.cpanm ] \
+    && rm -r /root/.cpanm || true; }
 
-WORKDIR /ws/${IDIR}
+USER dev
 
 CMD [""]
