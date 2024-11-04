@@ -25,6 +25,11 @@ jobs:
 
             - name: Install missing Dist::Zilla plugins
               run: dzil authordeps --missing | cpanm -n
+            
+            - name: Set ownership
+              run: |
+                    # this is to fix GIT not liking owner of the checkout dir
+                    chown -R $(id -u):$(id -g) $PWD
 
             - name: Build module
               run: dzil build
