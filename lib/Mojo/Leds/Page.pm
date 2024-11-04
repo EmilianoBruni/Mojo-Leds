@@ -78,6 +78,14 @@ sub render_static_file {
 
 1;
 
+__END__
+
+# ABSTRACT: Controller for handling page routes
+
+=pod
+
+=encoding UTF-8
+
 =head1 NAME
 
 Mojo::Leds::Page - Controller for handling page routes
