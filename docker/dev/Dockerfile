@@ -15,4 +15,6 @@ RUN { [ -f dist.ini ] && \
     && { [ -d /root/.cpanm ] \
     && rm -r /root/.cpanm || true; }
 
+USER dev
+
 CMD [""]
