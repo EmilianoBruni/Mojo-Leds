@@ -3,7 +3,7 @@
 	"name": "Mojo-Leds",
 	"dockerComposeFile": "docker/docker-compose.vscode.yml",
 	"service": "dev",
-	"workspaceFolder": "/ws/${localWorkspaceFolderBasename}",
+	"workspaceFolder": "/usr/src/${localWorkspaceFolderBasename}",
 	"forwardPorts": [3000],
 	"customizations": {
         "vscode": {
