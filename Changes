@@ -1,5 +1,8 @@
 Changelog for Mojo-Leds
 
+1.17 2024-11-04T12:40:00
+- Minor bugs in build
+
 1.16 2024-11-04T11:20:00
 - Add support for custom format response in Mojo::Leds::Page::route
 

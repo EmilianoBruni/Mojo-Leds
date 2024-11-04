@@ -15,7 +15,7 @@ jobs:
     # fetch and build module
     Fetch-and-build:
         runs-on: ubuntu-latest
-        container: ebruni/devel:2.1-dzil
+        container: ebruni/devel:dzil
         steps:
             - name: Checkout Repo Action
               uses: actions/checkout@main
