@@ -30,7 +30,7 @@ jobs:
               run: dzil build
 
             - name: "Share builded module"
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@main
               with:
                 name: build-share
                 path: ./*.tar.gz
