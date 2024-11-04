@@ -1,7 +1,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
 # AUTHORS :  Emiliano Bruni (EB) <info@ebruni.it>
-# DATE    :  2022-07-13
+# DATE    :  2024-11-04
 # PURPOSE :
 #   Docker image with all necessary components required to Mojo::Leds [https://metacpan.org/pod/Mojo::Leds] framework components .
 #
@@ -12,6 +12,7 @@
 #
 # UPDATES:
 #   AUTHOR  DATE        VER  COMMENTS
+#   EB      2024-11-04  1.18  Update to Mojo::Leds v.1.17
 #   EB      2022-07-13  1.18  Includes mysql options
 #   EB      2022-06-08  1.17  Update to Mojo::Leds v.1.15
 #   EB      2022-06-07  1.16  Update to Mojolicious v.9.26
@@ -41,7 +42,8 @@
 # do not edit it directly
 #
 FROM ebruni/mojolicious:mysql
-MAINTAINER Emiliano Bruni <info@ebruni.it>
+LABEL maintainer="Emiliano Bruni <info@ebruni.it>"
+
 
 WORKDIR /var/www
 EXPOSE 3000 9091
@@ -68,6 +70,6 @@ LABEL org.opencontainers.image.licenses=Artistic-2.0
 LABEL org.opencontainers.image.source=https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mysql/Dockerfile
 LABEL org.opencontainers.image.title=Mojo::Leds
 LABEL org.opencontainers.image.url=https://github.com/EmilianoBruni/Mojo-Leds
-LABEL org.opencontainers.image.version=1.18-mysql
+LABEL org.opencontainers.image.version=1.19-mysql
 
 CMD ["/bin/bash", "-c"]
