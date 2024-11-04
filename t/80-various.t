@@ -64,3 +64,5 @@ $r->get('/custresponse' => [ format => 1 ])->to( 'CustPage', action => 'route' )
 $t->get_ok('/custresponse')->status_is(200)->content_like(qr/Hello World/i, 'Custom response with no extension');
 $t->get_ok('/custresponse.html')->status_is(200)->content_like(qr/Hello World/i, 'Custom response with html extension');
 $t->get_ok('/custresponse.cust')->status_is(200)->content_like(qr/Custom extension/i, 'Custom response with cust extension');
+
+done_testing();
