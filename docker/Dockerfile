@@ -22,8 +22,8 @@
 #
 
 # Using Alphine linux as base image
-FROM alpine:3.14
-MAINTAINER Bruni Emiliano <info@ebruni.it>
+FROM alpine:3.20
+LABEL maintainer="Bruni Emiliano <info@ebruni.it>"
 
 # Expose all default Mojolicious Ports
 EXPOSE 3000 9091
