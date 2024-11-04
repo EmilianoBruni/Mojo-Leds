@@ -46,11 +46,10 @@ jobs:
         strategy:
           matrix:
             perl-version:
-              - '5.16'
-              - '5.18'
-              - '5.20'
               - '5.22'
               - '5.30'
+              - '5.36'
+              - 'latest'
 
         container:
           image: perl:${{ matrix.perl-version }}
