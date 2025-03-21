@@ -7,23 +7,23 @@ Mojo::Leds is a docker image with all necessary components required to Mojo::Led
 
 All images, unless explicitly defined, are based on [ebruni/mojolicious](https://hub.docker.com/repository/docker/ebruni/mojolicious) and provide installed together with these Perl modules:
 
-* [Mojo::Leds](https://metacpan.org/pod/Mojo::Leds) v1.19.
+* [Mojo::Leds](https://metacpan.org/pod/Mojo::Leds) v1.18.
 
 # Supported tags and respective Dockerfile links
 
-* Mojo::Leds: [1.19, latest (main/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/main/Dockerfile) (size: **57.6MB**)
+* Mojo::Leds: [1.20, latest (main/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/main/Dockerfile) (size: **65.9MB**)
 
-* Mojo::Leds: [1.19-mongodb, mongodb (mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile) (size: **62.2MB**) based on [ebruni/mojolicious:mongodb](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
-
-  * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04.
-* Mojo::Leds: [1.19-micso-mysql, micso-mysql (micso-mysql/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mysql/Dockerfile) (size: **133MB**) based on [ebruni/mojolicious:mysql](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
+* Mojo::Leds: [1.20-micso-mysql, micso-mysql (micso-mysql/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mysql/Dockerfile) (size: **153MB**) based on [ebruni/mojolicious:mysql](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
 
   * [DBIx::Class::ResultSet::HashRef](https://metacpan.org/pod/DBIx::Class::ResultSet::HashRef) v1.002,
   * [DBIx::Class::TimeStamp](https://metacpan.org/pod/DBIx::Class::TimeStamp) v0.14,
-  * [DBIx::Class::InflateColumn::DateTime](https://metacpan.org/pod/DBIx::Class::InflateColumn::DateTime) v0.082843,
+  * [DBIx::Class::InflateColumn::DateTime](https://metacpan.org/pod/DBIx::Class::InflateColumn::DateTime) v0.082844,
   * [DBIx::Class::InflateColumn::Serializer](https://metacpan.org/pod/DBIx::Class::InflateColumn::Serializer) v0.09,
-  * [DateTime::Format::ISO8601](https://metacpan.org/pod/DateTime::Format::ISO8601) v0.16.
-* Mojo::Leds: [1.19-mysql, mysql (mysql/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mysql/Dockerfile) (size: **86.6MB**) based on [ebruni/mojolicious:mysql](https://hub.docker.com/repository/docker/ebruni/mojolicious) * Mojo::Leds: [1.19-micso-mongodb, micso-mongodb (micso-mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mongodb/Dockerfile) (size: **72.1MB**) based on [ebruni/minion-backend-mongodb:mongodb](https://hub.docker.com/repository/docker/ebruni/minion-backend-mongodb) with these additional Perl modules
+  * [DateTime::Format::ISO8601](https://metacpan.org/pod/DateTime::Format::ISO8601) v0.17.
+* Mojo::Leds: [1.20-mysql, mysql (mysql/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mysql/Dockerfile) (size: **99.7MB**) based on [ebruni/mojolicious:mysql](https://hub.docker.com/repository/docker/ebruni/mojolicious) * Mojo::Leds: [1.20-mongodb, mongodb (mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/mongodb/Dockerfile) (size: **70.7MB**) based on [ebruni/mojolicious:mongodb](https://hub.docker.com/repository/docker/ebruni/mojolicious) with these additional Perl modules
+
+  * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04.
+* Mojo::Leds: [1.20-micso-mongodb, micso-mongodb (micso-mongodb/Dockerfile)](https://github.com/EmilianoBruni/Mojo-Leds/blob/master/micso-mongodb/Dockerfile) (size: **119MB**) based on [ebruni/minion-backend-mongodb:mongodb](https://hub.docker.com/repository/docker/ebruni/minion-backend-mongodb) with these additional Perl modules
 
   * [Mojolicious::Plugin::Restify::OtherActions](https://metacpan.org/pod/Mojolicious::Plugin::Restify::OtherActions) v0.04,
   * [Mojolicious::Plugin::AccessLog](https://metacpan.org/pod/Mojolicious::Plugin::AccessLog) v0.010001,
@@ -61,7 +61,8 @@ Emiliano Bruni (EB) <info@ebruni.it>
 
 | AUTHOR | DATE | VER. | COMMENTS |
 |:---|:---:|:---:|:---|
-| EB | 2024-11-04 | 1.19 | Update to Mojo::Leds v.1.19 |
+| EB | 2025-03-21 | 1.20 | Update micso-mongodb to alpine 3.20. Mojolicious to v. 9.38 |
+| EB | 2024-11-04 | 1.19 | Update to Mojo::Leds v.1.18 |
 | EB | 2022-07-13 | 1.18 | Includes mysql options |
 | EB | 2022-06-08 | 1.17 | Update to Mojo::Leds v.1.15 |
 | EB | 2022-06-07 | 1.16 | Update to Mojolicious v.9.26 |
