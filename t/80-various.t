@@ -47,6 +47,30 @@ sub render_html {
     return { text => 'Hello World' };
 }
 
+package Skel::Page::Base64;
+use Mojo::Base 'Skel::Page';
+sub route {
+    my $s = shift;
+    push @_, {cod => sub {$s->route_base64}};
+    $s->SUPER::route(@_);
+}
+
+sub route_base64 {
+    my $s = shift;
+    my $data = "pippo";
+
+    print "Route base64\n";
+
+    $s->render(data => Mojo::Util::b64_encode($data), format => 'txt');
+}
+
+package Base64Page;
+use Mojo::Base 'Skel::Page::Base64';
+sub render_html {
+    my $c = shift;
+    return { text => 'Hello World' };
+}
+
 
 package main;
 use Mojo::Base -strict;
@@ -64,5 +88,11 @@ $r->get('/custresponse' => [ format => 1 ])->to( 'CustPage', action => 'route' )
 $t->get_ok('/custresponse')->status_is(200)->content_like(qr/Hello World/i, 'Custom response with no extension');
 $t->get_ok('/custresponse.html')->status_is(200)->content_like(qr/Hello World/i, 'Custom response with html extension');
 $t->get_ok('/custresponse.cust')->status_is(200)->content_like(qr/Custom extension/i, 'Custom response with cust extension');
+
+$r->get('/base64page' => [ format => 1 ])->to( 'Base64Page', action => 'route' );
+$t->get_ok('/base64page')->status_is(200)->content_like(qr/Hello World/i, 'Base64 response with no extension');
+$t->get_ok('/base64page.html')->status_is(200)->content_like(qr/Hello World/i, 'Base64 response with html extension');
+$t->get_ok('/base64page.cod')->status_is(200)->content_like(qr/cGlwcG8=/i, 'Base64 response with cod extension');
+
 
 done_testing();
